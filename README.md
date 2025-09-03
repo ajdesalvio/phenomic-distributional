@@ -11,4 +11,4 @@ Our preprint can be found at [this biorxiv link](https://insert_link_here).
 
 ### Distributional Data Analysis - Python Scripts
 
-See the `Tutorials` folder above for the datasets and Rmarkdown files used to generate the above guides.
+See the `RMarkdown` folder for the RMarkdown files used to generate each RPubs document and see the `Data` folder for files required to run the code.
