@@ -1,0 +1,155 @@
+---
+title: "ANOVA Across All DATs Standard VIs (Median)"
+author: "Aaron J. DeSalvio"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Libraries, message=FALSE, warning=FALSE}
+library(lubridate)
+library(lme4)
+library(lmerTest)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(data.table)
+```
+
+# Analysis of Variance - AM1 & HM1
+
+The following ANOVA models are primarily aimed at quantifying the degree of Genotype x Time interaction present in the vegetation indices. We're using "standard" VIs, meaning only the median value is being tested.
+
+```{r Load data, perform filtering steps, basic plotting}
+# Set working directory and source external functions
+# Replace this path with the actual path where you saved the repository's files
+data_path <- 'D:/Users/aaron.desalvio/My Drive/TAMU/Murray Lab/Writing/Manuscripts/2025_Distributional_Data/CS24_Cotton/0.0_Data/'
+
+# Read data from CSV files
+df <- data.table::fread(paste0(data_path, 'CS24-STEL-MULTI-RTK-VIs-FieldCoords.csv')) %>% as.data.frame() %>% arrange(DAT)
+
+# Remove low-quality DATs
+DATs_exclude <- c(46, 71:72, 99:100)
+df <- df %>% filter(!DAT %in% DATs_exclude)
+
+# Remove plant that died early in the season
+df <- df %>% filter(!Row_Range == '413_15')
+
+# Basic plot for inspection of data
+sort(unique(df$DAT))
+df.plot <- df %>% filter(Pedigree == 5001)
+plot(df.plot$DAT, df.plot$NDVI_mean, ylim = c(0.0, 1.0))
+
+# Vector of VI names for loop
+VI.Names <- sort(unique(colnames(df)[19:ncol(df)]))
+
+# For the purposes of this document, we'll only perform one iteration of the loop.
+# Comment out the following line if you'd like to run the entire loop
+VI.Names <- 'NGRDI_median'
+```
+
+## Loop to run ANOVA models for each VI
+
+```{r ANOVA loop}
+# Initialize empty lists to store results
+G_list <- list()
+VC_list <- list()
+
+for (vi.name in VI.Names) {
+    
+    # Subset data for the current VI
+    df.subset <- df %>% select(all_of(c('Range', 'Row', 'Replicate', 'Pedigree', 'DAT', vi.name)))
+    
+    # Convert variables to appropriate data types
+    df.subset$Range <- as.factor(df.subset$Range)
+    df.subset$Row <- as.factor(df.subset$Row)
+    df.subset$Replicate <- as.factor(df.subset$Replicate)
+    df.subset$Pedigree <- as.factor(df.subset$Pedigree)
+    df.subset$DAT <- as.factor(df.subset$DAT)
+      
+    # Progress report
+    print(paste('ANOVA Model:', vi.name))
+      
+    # Fit the linear mixed-effects model after setting "Inf" and NaN as NA
+    response <- df.subset[,vi.name]
+    response[is.na(response) | response == 'Inf' | is.nan(response) | response == '-Inf'] <- NA
+      
+    anova <- lmer(response ~
+                    (1 | Pedigree) +
+                    (1 | DAT) +
+                    (1 | Pedigree:DAT) +
+                    (1 | Range:DAT) +
+                    (1 | Row:DAT) +
+                    (1 | Replicate:DAT),
+                  data = df.subset)
+      
+    # Calculate RMSE
+    rmse_value <- sqrt(mean(residuals(anova)^2))
+      
+    # Calculate R-squared
+    R <- MuMIn::r.squaredGLMM(anova)[, "R2c"]  # Conditional R-squared
+      
+    # Extract variance components
+    VC <- as.data.frame(VarCorr(anova))
+    VC$Percent <- round(VC$vcov / sum(VC$vcov) * 100, 2)
+      
+    # Calculate heritability
+    nRep <- length(unique(df.subset$Replicate))
+    nFlight <- length(unique(df.subset$DAT))
+    Vg <- VC[VC$grp == "Pedigree", "vcov"]
+    Vgf <- VC[VC$grp == "Pedigree:DAT", "vcov"]
+    Ve <- VC[VC$grp == "Residual", "vcov"]
+    #heritability <- Vg / (Vg + (Vgf / nFlight) + (Ve / (nRep * nFlight)))
+    #heritability <- round(heritability, 3)
+    heritability <- Vg / (Vg + (Vgf) + (Ve / (nRep)))
+    heritability <- round(heritability, 3)
+      
+    # Add additional information to VC data frame
+    VC$Rmse <- rmse_value
+    VC$Heritability <- heritability
+    VC$R_squared <- R
+    VC$Vegetation.Index <- vi.name
+    print(VC)
+      
+    # Store VC in the list
+    VC_list[[vi.name]] <- VC
+      
+    # Extract random effects for 'Pedigree'
+    G <- coef(anova)$Pedigree
+    G$Pedigree <- rownames(G)
+      
+    # Store G in the list
+    G_list[[vi.name]] <- G
+      
+}
+```
+
+## Save the ANOVA results
+
+```{r Save the ANOVA results}
+# Combine the lists into data frames
+G_df <- rbindlist(G_list, fill = T) %>% as.data.frame()
+VC_df <- rbindlist(VC_list, fill = T) %>% as.data.frame()
+
+# View the first few rows of the results
+head(G_df)
+head(VC_df)
+
+# Data wrangling before exporting
+VC_df_cols <- colnames(VC_df)
+VC_df_cols <- VC_df_cols[!VC_df_cols %in% c('var1', 'var2')]
+VC_df <- VC_df[,VC_df_cols]
+
+colnames(G_df)[1] <- 'VI.BLUP'
+VI_vec <- rep(VI.Names, each = length(unique(df.subset$Pedigree)))
+length(VI_vec) == nrow(G_df)
+G_df$Vegetation.Index <- VI_vec
+G_df$Vegetation.Index.Type <- lapply(strsplit(as.character(G_df$Vegetation.Index), '_'), '[', 2) %>% unlist()
+
+# Save the data frames
+#fwrite(VC_df, paste0(data_path, 'VarComp_Across_All_DATs_Standard_VIs_Revised_Herit.csv'))
+#fwrite(G_df, paste0(data_path, 'Quantile_BLUPs_Within_DAT_Standard_VIs_Revised_Herit.csv'))
+```
