@@ -7,7 +7,7 @@ Our preprint can be found at [this biorxiv link](https://insert_link_here).
 
 ### Distributional Data Analysis - R Scripts
 "AM" indicates "ANOVA Model", and "HM" indicates "heritability model" (see Table 1 in the paper)
-- $\textbf{ANOVA to test Genotype x Time interaction with median VIs}$: [AM1 / HM1](https://rpubs.com/ajdesalvio/cotton_maize_anova1)
+- $\textbf{ANOVA to test Genotype × Time interaction with median VIs}$: [AM1 / HM1](https://rpubs.com/ajdesalvio/cotton_maize_anova1)
 - $\textbf{ANOVA to quantify heritability and Genotype variance for each time point with median VIs}$: [AM2 / HM2](https://rpubs.com/ajdesalvio/cotton_maize_anova2)
 - $\textbf{ANOVA to quantify heritability and Genotype variance for each quantile WITHIN time point}$: [AM3 / HM3](https://rpubs.com/ajdesalvio/cotton_maize_anova3)
 
