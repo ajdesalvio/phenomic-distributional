@@ -8,6 +8,32 @@ Our preprint can be found at [this biorxiv link](https://insert_link_here).
 ### Notes regarding raw data
 In total, this manuscript relied upon several terabytes of files, between raw drone images, orthomosaics, and CSV files that contain the distributional quantile data (the raw quantile data from all G2F locations was a 58 gigabyte file alone, excluding columns for information like genotype, range, row, replicate)! As such, we simply cannot store all of this data on GitHub. The scripts provided below will allow readers to reproduce the analyses in the paper and generate the CSV files that are required to produce the figures from which conclusions in the paper are drawn. For the section that details extracting distributional data from orthomosaics: the orthomosaics, shapefiles, and raw drone images are in the process of being uploaded to the [Data 2 Science website](https://ps2.d2s.org/) hosted by Purdue University and created by [Dr. Jinha Jung](https://engineering.purdue.edu/CCE/People/ptProfile?resource_id=222078).
 
+## Menu
+[Python setup - creating a conda virtual environment from a .yml file](#installation)
+
+[Shapefile creation from a CSV file](#p1)
+
+[Image extraction from orthomosaics](#p2)
+
+[Soil masking](#p3)
+
+[Extraction of standard VIs and distributional data](#p4)
+
+[Mixed function-on-scalar distributional regression model for phenomic data](#p5)
+     
+[Yield prediction and feature importance quantificaiton with maize distributional data](#p6)
+     
+[Correlation analysis of maize quantile phenomic data](#p7)
+
+[Visualization of raw data](#p8)
+
+[Calculation and visualization of heritability](#p9)
+
+<div id="installation" />
+
+### Python setup - creating a conda virtual environment from a .yml file
+
+
 ### Extraction of distributional data from orthomosaics
 
 ### Cotton Distributional Data Analysis - R Scripts
