@@ -76,7 +76,10 @@ gdf = create_shapefile_from_csv(
 ```
 `csv_path` and `output_path` indicate the paths where the initial CSV file is stored and the location where you'd like to save the resulting shapefile, respectively.
 "A" and "B" indcate the coordinates of the "AB line", which provides a line that the function will use to specify the angle of each component of the shapefile. Examples of where to obtain the AB coordinates in an orthomosaic could look like:
-
+<p align="center">
+  <img src="Images/AB_Line_Upload.jpg" width="20%" height="20%" />
+</p>
+To obtain the exact coordinates, load an orthomosaic in QGIS and right click. A dialog box saying `Copy coordinate` will appear - make sure to copy coordinates in the specific UTM zone your orthomosaic was exported in. In the case of this example, we are in UTM zone 14N with an EPSG code of 32614.
 
 ### Extraction of distributional data from orthomosaics
 
