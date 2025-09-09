@@ -8,6 +8,8 @@ All analyses mentioned in the paper are included below as R scripts, RMarkdown d
 ### Notes regarding raw data
 In total, this manuscript relied upon several terabytes of files, between raw drone images, orthomosaics, and CSV files that contain the distributional quantile data (the raw quantile data from all G2F locations was a 58 gigabyte file alone, excluding columns for information like genotype, range, row, replicate)! As such, we simply cannot store all of this data on GitHub. The scripts provided below will allow readers to reproduce the analyses in the paper and generate the CSV files that are required to produce the figures from which conclusions in the paper are drawn. For the section that details extracting distributional data from orthomosaics: the orthomosaics, shapefiles, and raw drone images are in the process of being uploaded to the [Data 2 Science website](https://ps2.d2s.org/) hosted by Purdue University and created by [Dr. Jinha Jung](https://engineering.purdue.edu/CCE/People/ptProfile?resource_id=222078).
 
+Until I come up with a permanent storage solution for these files, please feel free to download the CSV files needed to run the majority of the analysis scripts below from this [Google Drive link](https://drive.google.com/drive/folders/1ygCB60KbkNKSI_WO7uNUJxy1afdZIzBq?usp=sharing).
+
 ## Menu
 [1 - Python setup - creating a conda virtual environment from a .yml file](#installation)
 
