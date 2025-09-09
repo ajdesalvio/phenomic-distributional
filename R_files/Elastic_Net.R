@@ -5,7 +5,7 @@ library(ggplot2)
 library(data.table)
 library(doParallel)
 
-data_path <- 'C:/Users/ajdes/Downloads/Quantile_BLUEs_G2F_Distributional_ExGR/'
+data_path <- 'C:/Users/aaron.desalvio/Downloads/All_Distributional_Files/'
 
 # Filter BLUE data frame for most-heritable VI (ExGR for G2F)
 blue.filt <- fread(paste0(data_path, 'Quantile_BLUEs_G2F_Distributional_ExGR.csv')) %>% as.data.frame()
@@ -217,3 +217,4 @@ varimp.fig <- varimp.all %>% filter(Overall > 0) %>% arrange(Env, Filtering_Para
 
 # Save metrics
 #write.csv(metrics, paste0(data_path, 'Elastic_Net_Yield_Pred_Metrics.csv'), row.names = F)
+
