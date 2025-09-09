@@ -7,7 +7,7 @@ library(partR2)
 library(dplyr)
 library(tidyr)
 
-data_path <-"path/to/R/CSV/files/" # Include the forward slash at the end
+data_path <-"C:/Users/aaron.desalvio/Downloads/All_Distributional_Files/" # Include the forward slash at the end
 
 # Choose the Vegetation Index name
 vi_load <- 'ExG2'
@@ -84,3 +84,4 @@ jpeg('fastFMM_MULTI_ExG2_V2.jpg', height = 7, width = 10, units = 'in', res = 60
 plot_fui_custom(fit_dti, num_row = 4, title_names = c(paste(5016, '(TM-1)'), 5001:5015), xlab = 'Quantile Level',
                 beta_vec = beta_vec)
 dev.off()
+
