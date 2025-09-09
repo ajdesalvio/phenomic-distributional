@@ -1,9 +1,9 @@
 ## Distributional Data Analysis Uncovers Hundreds of Novel and Heritable Phenomic Features from Temporal Cotton and Maize Drone Imagery
 
-This repository serves as a supplementary data source for our manuscript that introduces the concept of distributional data analysis for agricultural research and will be updated throughout the preprint and publication process.
-All analyses mentioned in the paper are included below as RMarkdown documents. Files needed to run the RMarkdown scripts are included in the `R_files` folder. Files needed to run the python scripts are included in the `Python_files` folder.
+Our preprint can be found at [this bioRxiv link](https://www.biorxiv.org/content/10.1101/2025.09.05.674557v1).
 
-Our preprint can be found at [this biorxiv link](https://www.biorxiv.org/content/10.1101/2025.09.05.674557v1).
+This repository serves as a supplementary data source for our manuscript that introduces the concept of distributional data analysis for agricultural research and will be updated throughout the preprint and publication process.
+All analyses mentioned in the paper are included below as RMarkdown documents. Files small enough to be stored on GitHub that are needed to run the RMarkdown scripts are included in the `R_files` folder. Files needed to run the python scripts are included in the `Python_files` folder. Files that are too large for GitHub storage can be obtained either from the D2S website (linked below) or from the authors directly.
 
 ### Notes regarding raw data
 In total, this manuscript relied upon several terabytes of files, between raw drone images, orthomosaics, and CSV files that contain the distributional quantile data (the raw quantile data from all G2F locations was a 58 gigabyte file alone, excluding columns for information like genotype, range, row, replicate)! As such, we simply cannot store all of this data on GitHub. The scripts provided below will allow readers to reproduce the analyses in the paper and generate the CSV files that are required to produce the figures from which conclusions in the paper are drawn. For the section that details extracting distributional data from orthomosaics: the orthomosaics, shapefiles, and raw drone images are in the process of being uploaded to the [Data 2 Science website](https://ps2.d2s.org/) hosted by Purdue University and created by [Dr. Jinha Jung](https://engineering.purdue.edu/CCE/People/ptProfile?resource_id=222078).
@@ -21,13 +21,11 @@ In total, this manuscript relied upon several terabytes of files, between raw dr
 
 [6 - Mixed function-on-scalar distributional regression model for phenomic data](#p6)
      
-[7 - Yield prediction and feature importance quantificaiton with maize distributional data](#p7)
+[7 - Yield prediction and feature importance quantification with maize distributional data](#p7)
      
-[8 - Correlation analysis of maize quantile phenomic data](#p8)
+[8 - Calculation and of heritability - ANOVA models](#p8)
 
-[9 - Visualization of raw data](#p9)
-
-[10 - Calculation and visualization of heritability](#p10)
+[9 - Figures (in order of appearance)](#p9)
 
 <br />
 
@@ -46,7 +44,7 @@ Once the installation is complete, activate the environment. If you want to use 
 
 <br />
 
-<div id="p1" />
+<div id="p2" />
 
 ### 2 - Shapefile creation from a CSV file
 To create a shapefile, use the `create_shapefile_from_csv()` function within the `Create_Shapefile.py` script. A CSV file with unique plot IDs (or single plant IDs) must be provided to the function for it to work. I find it easiest to concatenate the X and Y coordinate columns together. In the example below, we've concatenated the Range (Y axis) and Row (X axis) identifiers to make the `Range_Row` column. An example usage of the function is as follows:
@@ -99,7 +97,7 @@ To obtain the exact coordinates, load an orthomosaic in QGIS and right click. A 
 
 <br />
 
-<div id="p2" />
+<div id="p3" />
 
 ### 3 - Image extraction from orthomosaics
 After aligning each shapefile for each flight date, the `crop_regions_from_ortho()` function enables extraction of individual experimental units from orthomosaics. An example implementation of the function is detailed below:
@@ -155,7 +153,7 @@ Note that the export directory from `crop_regions_from_ortho()` has become our i
 
 <br />
 
-<div id="p3" />
+<div id="p4" />
 
 ### 4 - Soil masking
 Soil masking is a difficult undertaking and we by no means claim to have the perfect solution to this problem. We use vegetation indices to create binary masks for segmenting plant vs. soil pixels using previously published indices such as the [HUE index](https://github.com/OpenDroneMap/FIELDimageR) and the [ExG index](https://www.mdpi.com/2072-4292/12/11/1748). We fully acknowledge that more robust methods likely exist, and still need to be developed, particularly at the onset of senescence when the segmentation threshold often mistakes senesced plant tissue with soil.
@@ -230,10 +228,128 @@ process_and_save_masks_multi(
 ```
 The most crucial parameter here is `my_band_map`. This is a python dictionary that enables the user to specify the name and the order of each band. In the band map provided in this example (corresponding to a DJI Phantom 4 Multispectral orthomosaic that was exported with Agisoft Metashape), the band order is Blue, Green, Red, RedEdge, NIR. Note that python uses zero indexing, so the first band is specified with 0, the second with 1, etc. The logic for this function is the same as with the RGB-only function - a custom index can be provided by specifying a dictionary and feeding into the `custom_indices` argument.
 
+<br />
 
-### Extraction of distributional data from orthomosaics
+<div id="p5" />
 
-### Cotton Distributional Data Analysis - R Scripts
+### 5 - Extraction of standard VIs and distributional data
+Having completed steps to create a shapefile, crop individual experimental units using shapefiles, remove excess black pixels if needed, and segment plant vs. soil pixels, we can now proceed to extract both standard VIs (mean and median values across the entire experimental unit) and distributional VI data by building quantile functions for each experimental unit and evaluating the quantile function at steps of `0.01, 0.02, ... , 1.00`. Both the RGB and multispectral versions of the functions below use parallel processing and data streaming to minimize the impact on RAM usage. In theory, the use of these functions should be constrained by the available hard disk space, not the amount of RAM. Functions are provided for RGB and multispectral data.
+
+#### RGB standard VIs and distributional data
+An example implementation of the RGB VI extraction function is given below:
+```python
+image_folder = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB/Masked_Images'
+output_folder = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB'
+output_csv_name = 'CS24-STEL-RGB-VIs-Test.csv'
+output_csv_name_distribution = 'CS24-STEL-RGB-VIs-Test-Distributions.csv'
+
+# Determine the number of workers (for an 8-core/16-logical processor machine, consider using between 8-12)
+safe_num_workers = os.process_cpu_count() - 12  # adjust as needed
+
+# First run using base VI functions
+compute_rgb_vegetation_indices_parallel(
+    image_folder=image_folder,
+    output_folder=output_folder,
+    output_csv_name=output_csv_name,
+    vi_functions=None,
+    replace_vi_dictionary=False,
+    distributions=True,
+    output_csv_name_distribution=output_csv_name_distribution,
+    max_workers=safe_num_workers,
+    batch_size=100,
+    scale_param=255
+)
+    
+# Example of defining a custom VI:
+custom_vi_dict = {
+    "SimpleIndex": lambda R, G, B: (R/scale) - (G/scale)
+}
+
+
+# Example: merging custom VI with base functions
+compute_rgb_vegetation_indices_parallel(
+    image_folder=image_folder,
+    output_folder=output_folder,
+    output_csv_name="Additional_VI.csv",
+    vi_functions=custom_vi_dict,
+    replace_vi_dictionary=False,
+    distributions=True,
+    output_csv_name_distribution="Additional_VI_Distributions.csv",
+    max_workers=4,
+    batch_size=100,
+    scale_param=255
+)
+
+# Example: using only custom VI (replacing base functions)
+compute_rgb_vegetation_indices_parallel(
+    image_folder=image_folder,
+    output_folder=output_folder,
+    output_csv_name="User_VI_Only.csv",
+    vi_functions=custom_vi_dict,
+    replace_vi_dictionary=True,
+    distributions=True,
+    output_csv_name_distribution="User_VI_Only_Distributions.csv",
+    max_workers=4,
+    batch_size=100,
+    scale_param=255
+)
+```
+In addition to providing paths for the input images (the masked, soil-segmented images from earlier steps, `image_folder`) and the folder where you'd like the final CSV files to be saved (`output_folder`), you'll have to provide the names of the CSV files that will contain the traditional mean/median VI values (`output_csv_name`) and the distributional quantile data (`output_csv_name_distributional`). In the first of three implementation examples above, VI data extraction is implemented for the default set of 33 VIs. Users can define one or more custom VIs and save them as a dictionary where each index is named. This dictionary can be passed to `vi_functions`. An example of how to do this is shown in the second implementation for `custom_vi_dict`. The `replace_vi_functions` argument indicates whether you'd like that custom dictionary to entirely replace the default VIs (setting it to `True`) or simply add your custom VIs to the default VIs (setting the argument to `False`). The third implementation shows the settings you'd choose to use a custom VI and replace the default VI dictionary.
+`max_workers` is the maximum number of worker processes to use for parallel processing, and `batch_size` is the number of image tasks processed per batch (default = 100).
+
+`scale_param` indicates the factor used to rescale pixel values. Most RGB values will have raw data within a range of `[0,255]`, so this most likely will need to be 255 in order to rescale the values to `[0,1]`.
+
+#### Multispectral standard VIs and distributional data
+The only difference between the RGB and multispectral versions of the functions is that you once again need to define `my_band_map`, which provides the names and order of the bands in the multispectral image files. An example implementation is provided below. Here, `scale_param` was set to 65535 because DJI Phantom 4 Multispectral images have raw data in the range of `[0,65535]`.
+```python
+image_folder = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB/Masked_Images'
+output_folder = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB'
+output_csv_name = 'CS24-STEL-MULTI-VIs-Subset1.csv'
+output_csv_name_distribution = 'CS24-STEL-MULTI-VIs-Distributions-Subset1.csv'
+my_band_map = {'B':0, 'G':1, 'R':2, 'RE':3, 'NIR':4}
+
+safe_num_workers = os.process_cpu_count() - 12
+
+compute_multi_vegetation_indices_parallel(
+    image_folder=image_folder,
+    output_folder=output_folder,
+    output_csv_name=output_csv_name,
+    vi_functions=None,
+    replace_vi_dictionary=False,
+    band_map=my_band_map,
+    distributions=True,
+    output_csv_name_distribution=output_csv_name_distribution,
+    max_workers=safe_num_workers,
+    batch_size=100,
+    scale_param=65535
+)
+```
+
+<br />
+
+<div id="p6" />
+
+### 6 - Mixed function-on-scalar distributional regression model for phenomic data
+The mixed function-on-scalar distributional regression model was implemented using the `fastFMM` R package. The full R script can be found [here](R_files/fastFMM_ExG2.R). To produce the figure, a custom version of the `plot_fui` function is also provided. The function call is straightforward, thanks to the efforts of [Gabriel Loewinger](https://elifesciences.org/articles/95802):
+```r
+fit_dti <- fui(
+  Y ~ Pedigree+(Range+Row|Replicate),
+  data = data2
+)
+```
+
+<br />
+
+<div id="p7" />
+
+### 7 - Yield prediction and feature importance quantification with maize distributional data
+The yield prediction/feature importance analysis was conducted using distributional data BLUEs from the 11 G2F 2020-2021 environments included in the study. The full path to the script can be found [here](R_files/Elastic_Net.R). As the script would take too long to produce an RPubs document, the procedure is described here instead. A data frame with ExGR BLUEs (ExGR was the most heritable VI in the G2F data set) and the grain yield BLUEs were imported into the R environment. Within each environment (the outer loop), different data filtering scenarios were enacted. For each filtering scenario, an elastic net regression was performed and metrics such as RMSE, MAE, mean bias, and the best alpha/lambda values were saved. Correlations between actual and predicted grain yield values were the metric by which model performances were compared. 5-fold cross-validation with 25 repetitions was used for training and testing each model.
+
+<br />
+
+<div id="p8" />
+     
+### 8 - Calculation of heritability - ANOVA models
 "AM" indicates "ANOVA Model", and "HM" indicates "heritability model" (see Table 1 in the paper)
 - $\textbf{ANOVA to quantify Genotype × Time interaction with median VIs}$: [AM1 / HM1](https://rpubs.com/ajdesalvio/cotton_maize_anova1)
 - $\textbf{ANOVA to quantify heritability and Genotype variance for each time point with median VIs}$: [AM2 / HM2](https://rpubs.com/ajdesalvio/cotton_maize_anova2)
@@ -241,6 +357,33 @@ The most crucial parameter here is `my_band_map`. This is a python dictionary th
 - $\textbf{ANOVA to quantify Genotype × Time interaction at each quantile level}$: [AM4 / HM4](https://rpubs.com/ajdesalvio/cotton_maize_anova4)
 - $\textbf{ANOVA to quantify Genotype × Quantile interaction at each time point}$: [AM5 / HM5](https://rpubs.com/ajdesalvio/cotton_maize_anova5)
 
-### Distributional Data Analysis - Python Scripts
+<br />
 
-See the `RMarkdown` folder for the RMarkdown files used to generate each RPubs document.
+<div id="p9" />
+     
+### 9 - Figures (in order of appearance)
+#### Figure 1 - methods overview
+This figure was made using PowerPoint. The associated PowerPoint file is saved in the PowerPoint_Figures directory (accessible [here](PowerPoint_Figures/Figure1.pptx)).
+
+#### Figure 2 - visualization of raw data
+This figure was made with a combination of [python](Python_files/Figure2.py) and [PowerPoint](PowerPoint_Figures/Figure2.pptx).
+
+#### Figure 3 - visualization of significant effects of cotton introgression segments on quantile data
+This figure was produced at the end of the Mixed function-on-scalar distributional regression model [R script](R_files/fastFMM_ExG2.R).
+
+#### Figure 4 - variance components at each quantile level within DAP, variance components at each quantile level across DAPs
+This figure was produced using an [R script](R_files/Figure4.R), with multi-plot layout functionality provided by [cowplot](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html).
+
+Maize supplementary figures 4-14 were produced using this [R script](R_files/Figure4_Maize.R).
+
+#### Figure 5 - heritability heatmaps (HAMs)
+The cotton portion of the figure was produced with [this python script](Python_files/Figure5_Cotton.py), the maize portion of the figure was produced with [this python script](Python_files/Figure5_Maize.py), and the overall figure was assembled in [PowerPoint](PowerPoint_Figures/Figure5.pptx).
+
+#### Figure 6 - correlations between actual and predicted grain yield across 11 G2F environments
+This [R script](R_files/Figure6.R) was used to generate the figure.
+
+#### Figure 7 - feature importance of distributional data predictors
+This figure, as well as supplementary figures 16-26, were produced with this [R script](R_files/Figure7.R).
+
+#### Figure 8 - correlation analysis of distributional quantile data
+This figure was produced by this [R script](R_files/Figure8.R).
