@@ -365,25 +365,41 @@ The yield prediction/feature importance analysis was conducted using distributio
 #### Figure 1 - methods overview
 This figure was made using PowerPoint. The associated PowerPoint file is saved in the PowerPoint_Figures directory (accessible [here](PowerPoint_Figures/Figure1.pptx)).
 
+<br />
+
 #### Figure 2 - visualization of raw data
 This figure was made with a combination of [python](Python_files/Figure2.py) and [PowerPoint](PowerPoint_Figures/Figure2.pptx).
+
+<br />
 
 #### Figure 3 - visualization of significant effects of cotton introgression segments on quantile data
 This figure was produced at the end of the Mixed function-on-scalar distributional regression model [R script](R_files/fastFMM_ExG2.R).
 
+<br />
+
 #### Figure 4 - variance components at each quantile level within DAP, variance components at each quantile level across DAPs
 This figure was produced using an [R script](R_files/Figure4.R), with multi-plot layout functionality provided by [cowplot](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html).
 
+<br />
+
 Maize supplementary figures 4-14 were produced using this [R script](R_files/Figure4_Maize.R).
+
+<br />
 
 #### Figure 5 - heritability heatmaps (HAMs)
 The cotton portion of the figure was produced with [this python script](Python_files/Figure5_Cotton.py), the maize portion of the figure was produced with [this python script](Python_files/Figure5_Maize.py), and the overall figure was assembled in [PowerPoint](PowerPoint_Figures/Figure5.pptx).
 
+<br />
+
 #### Figure 6 - correlations between actual and predicted grain yield across 11 G2F environments
 This [R script](R_files/Figure6.R) was used to generate the figure.
 
+<br />
+
 #### Figure 7 - feature importance of distributional data predictors
 This figure, as well as supplementary figures 16-26, were produced with this [R script](R_files/Figure7.R).
+
+<br />
 
 #### Figure 8 - correlation analysis of distributional quantile data
 This figure was produced by this [R script](R_files/Figure8.R).
