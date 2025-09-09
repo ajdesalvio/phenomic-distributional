@@ -387,7 +387,7 @@ Maize supplementary figures 4-14 were produced using this [R script](R_files/Fig
 <br />
 
 #### Figure 5 - heritability heatmaps (HAMs)
-The cotton portion of the figure was produced with [this python script](Python_files/Figure5_Cotton.py), the maize portion of the figure was produced with [this python script](Python_files/Figure5_Maize.py), and the overall figure was assembled in [PowerPoint](PowerPoint_Figures/Figure5.pptx).
+The cotton portion of the figure was produced with [this python script](Python_files/Figure5_Cotton.py), the maize portion of the figure was produced with [this python script](Python_files/Figure5_Maize.py), and the overall figure was assembled in [PowerPoint](PowerPoint_Figures/Figure5.zip).
 
 <br />
 
