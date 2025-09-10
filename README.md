@@ -51,7 +51,7 @@ Once the installation is complete, activate the environment. If you want to use 
 <div id="p2" />
 
 ### 2 - Shapefile creation from a CSV file
-To create a shapefile, use the `create_shapefile_from_csv()` function within the `Create_Shapefile.py` script. A CSV file with unique plot IDs (or single plant IDs) must be provided to the function for it to work. I find it easiest to concatenate the X and Y coordinate columns together. In the example below, we've concatenated the Range (Y axis) and Row (X axis) identifiers to make the `Range_Row` column. An example usage of the function is as follows:
+To create a shapefile, use the `create_shapefile_from_csv()` function within the `Create_Shapefile.py` [script](Python_files/Create_Shapefile.py). A CSV file with unique plot IDs (or single plant IDs) must be provided to the function for it to work. I find it easiest to concatenate the X and Y coordinate columns together. In the example below, we've concatenated the Range (Y axis) and Row (X axis) identifiers to make the `Range_Row` column. An example usage of the function is as follows:
 
 ```python
 csv_path = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB_G2F_2024'
@@ -80,6 +80,7 @@ gdf = create_shapefile_from_csv(
 <p align="center">
   <img src="Images/AB_Line_Upload.jpg" width="20%" height="20%" />
 </p>
+
 To obtain the exact coordinates, load an orthomosaic in QGIS and right click. A dialog box saying `Copy coordinate` will appear - make sure to copy coordinates in the specific UTM zone your orthomosaic was exported in. In the case of this example, we are in UTM zone 14N with an EPSG code of 32614.
 
 `ft_toggle` should be set to 0.3048 if your plot measurements are in feet. If your measurements are in meters, set this parameter to 1.
@@ -104,7 +105,7 @@ To obtain the exact coordinates, load an orthomosaic in QGIS and right click. A 
 <div id="p3" />
 
 ### 3 - Image extraction from orthomosaics
-After aligning each shapefile for each flight date, the `crop_regions_from_ortho()` function enables extraction of individual experimental units from orthomosaics. An example implementation of the function is detailed below:
+After aligning each shapefile for each flight date, the `crop_regions_from_ortho()` function in [this python script](Python_files/Crop_Regions_From_Ortho.py) enables extraction of individual experimental units from orthomosaics. An example implementation of the function is detailed below:
 
 ```python
 flight_list  = ['20240705', '20240706', '20240707']
@@ -139,7 +140,7 @@ crop_regions_from_ortho(
 </p>
 
 #### Removal of excess black background from cropped images
-This is an optional step that can be useful if the cropped images are going to be used directly as input data for a deep learning model. If not, this step does not need to be performed. The image above shows large portions of black background that were added during the plot cropping step. This is a consequence of working with GeoTIFFs as the spatial orientation of the plots is retained and the image saving step pads the image with black pixels to produce a square or rectangular output. The vegetation index extraction step will ignore these black pixels automatically, but if you prefer the images to look cleaner and/or to use them as direct inputs later, the next step is useful. An example implementation is demonstrated below.
+This is an optional step that can be useful if the cropped images are going to be used directly as input data for a deep learning model. If not, this step does not need to be performed. The image above shows large portions of black background that were added during the plot cropping step. This is a consequence of working with GeoTIFFs as the spatial orientation of the plots is retained and the image saving step pads the image with black pixels to produce a square or rectangular output. The vegetation index extraction step will ignore these black pixels automatically, but if you prefer the images to look cleaner and/or to use them as direct inputs later, the next step is useful. An example implementation is demonstrated below using [this python script](Python_files/Remove_Black_Background.py).
 ```python
 images_to_crop = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB/Cropped'
 clean_images_out = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB/Cropped_Clean'
@@ -160,7 +161,7 @@ Note that the export directory from `crop_regions_from_ortho()` has become our i
 <div id="p4" />
 
 ### 4 - Soil masking
-Soil masking is a difficult undertaking and we by no means claim to have the perfect solution to this problem. We use vegetation indices to create binary masks for segmenting plant vs. soil pixels using previously published indices such as the [HUE index](https://github.com/OpenDroneMap/FIELDimageR) and the [ExG index](https://www.mdpi.com/2072-4292/12/11/1748). We fully acknowledge that more robust methods likely exist, and still need to be developed, particularly at the onset of senescence when the segmentation threshold often mistakes senesced plant tissue with soil.
+Soil masking is a difficult undertaking and we by no means claim to have the perfect solution to this problem. We use vegetation indices to create binary masks for segmenting plant vs. soil pixels using previously published indices such as the [HUE index](https://github.com/OpenDroneMap/FIELDimageR) and the [ExG index](https://www.mdpi.com/2072-4292/12/11/1748). We fully acknowledge that more robust methods likely exist, and still need to be developed, particularly at the onset of senescence when the segmentation threshold often mistakes senesced plant tissue with soil. [This python script](Python_files/Soil_Masking_RGB.py) enables vegetation index soil segmentation for RGB data and [this script](Python_files/Soil_Masking_MULTI.py) enables working with multispectral data.
 
 #### RGB soil masking
 ```python
@@ -193,7 +194,7 @@ process_and_save_masks(input_images,
                        custom_indices=my_index,
                        output_type='.tif')
 ```
-The function's default is to use the ExG vegetation index for segmentation. By default, values below a 0.1 are marked as soil pixels. The `comparison` argument specifies whether pixels above (`greater`) or below (`less`) the threshold should be marked as soil pixels.
+The function's default is to use the ExG vegetation index for segmentation. By default, values below 0.1 are marked as soil pixels. The `comparison` argument specifies whether pixels above (`greater`) or below (`less`) the threshold should be marked as soil pixels.
 
 If you'd like to use your own index and override the default, create a python dictionary with the name of the index and its formula. In this case, the only available bands are red, green, and blue. An example of manually defining the HUE index is shown in the code snippet above. When specifying your own index, the `custom_indices` parameter must be set to the dictionary you created and the `index_name` must be the name of the index in that dictionary.
 
@@ -240,7 +241,7 @@ The most crucial parameter here is `my_band_map`. This is a python dictionary th
 Having completed steps to create a shapefile, crop individual experimental units using shapefiles, remove excess black pixels if needed, and segment plant vs. soil pixels, we can now proceed to extract both standard VIs (mean and median values across the entire experimental unit) and distributional VI data by building quantile functions for each experimental unit and evaluating the quantile function at steps of `0.01, 0.02, ... , 1.00`. Both the RGB and multispectral versions of the functions below use parallel processing and data streaming to minimize the impact on RAM usage. In theory, the use of these functions should be constrained by the available hard disk space, not the amount of RAM. Functions are provided for RGB and multispectral data.
 
 #### RGB standard VIs and distributional data
-An example implementation of the RGB VI extraction function is given below:
+An example implementation of the RGB VI extraction function is given below, made possible by [this python script](Python_files/RGB_VIs_Distributional_Multiprocessing.py):
 ```python
 image_folder = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB/Masked_Images'
 output_folder = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB'
@@ -304,7 +305,7 @@ In addition to providing paths for the input images (the masked, soil-segmented 
 `scale_param` indicates the factor used to rescale pixel values. Most RGB values will have raw data within a range of `[0,255]`, so this most likely will need to be 255 in order to rescale the values to `[0,1]`.
 
 #### Multispectral standard VIs and distributional data
-The only difference between the RGB and multispectral versions of the functions is that you once again need to define `my_band_map`, which provides the names and order of the bands in the multispectral image files. An example implementation is provided below. Here, `scale_param` was set to 65535 because DJI Phantom 4 Multispectral images have raw data in the range of `[0,65535]`.
+The only difference between the RGB and multispectral versions of the functions is that you once again need to define `my_band_map`, which provides the names and order of the bands in the multispectral image files. An example implementation is provided below. Here, `scale_param` was set to 65535 because DJI Phantom 4 Multispectral images have raw data in the range of `[0,65535]`. [This script](Python_files/MULTI_VIs_Distributional_Multiprocessing.py) contains the multispectral VI extraction function.
 ```python
 image_folder = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB/Masked_Images'
 output_folder = 'C:/Users/aaron.desalvio/Documents/TESTING/Python_Phenomics/RGB'
@@ -334,7 +335,7 @@ compute_multi_vegetation_indices_parallel(
 <div id="p6" />
 
 ### 6 - Mixed function-on-scalar distributional regression model for phenomic data
-The mixed function-on-scalar distributional regression model was implemented using the `fastFMM` R package. The full R script can be found [here](R_files/fastFMM_ExG2.R). To produce the figure, a custom version of the `plot_fui` function is also provided. The function call is straightforward, thanks to the efforts of [Gabriel Loewinger](https://elifesciences.org/articles/95802):
+The mixed function-on-scalar distributional regression model was implemented using the `fastFMM` R package. The full R script can be found [here](R_files/fastFMM_ExG2.R). To produce the figure, a custom version of the `plot_fui` function is also provided. The function call is straightforward, thanks to the efforts of [Gabriel Loewinger](https://doi.org/10.7554/eLife.95802.3):
 ```r
 fit_dti <- fui(
   Y ~ Pedigree+(Range+Row|Replicate),
@@ -347,7 +348,7 @@ fit_dti <- fui(
 <div id="p7" />
 
 ### 7 - Yield prediction and feature importance quantification with maize distributional data
-The yield prediction/feature importance analysis was conducted using distributional data BLUEs from the 11 G2F 2020-2021 environments included in the study. The full path to the script can be found [here](R_files/Elastic_Net.R). As the script would take too long to produce an RPubs document, the procedure is described here instead. A data frame with ExGR BLUEs (ExGR was the most heritable VI in the G2F data set) and the grain yield BLUEs were imported into the R environment. Within each environment (the outer loop), different data filtering scenarios were enacted. For each filtering scenario, an elastic net regression was performed and metrics such as RMSE, MAE, mean bias, and the best alpha/lambda values were saved. Correlations between actual and predicted grain yield values were the metric by which model performances were compared. 5-fold cross-validation with 25 repetitions was used for training and testing each model.
+The yield prediction/feature importance analysis was conducted using distributional data BLUEs from the 11 G2F 2020-2021 environments included in the study. The full path to the script can be found [here](R_files/Elastic_Net.R). A data frame with ExGR BLUEs (ExGR was the most heritable VI in the G2F data set) and the grain yield BLUEs were imported into the R environment. Within each environment (the outer loop), different data filtering scenarios were enacted. For each filtering scenario, an elastic net regression was performed and metrics such as RMSE, MAE, mean bias, and the best alpha/lambda values were saved. Correlations between actual and predicted grain yield values were the metric by which model performances were compared. 5-fold cross-validation with 25 repetitions was used for training and testing each model.
 
 <br />
 
@@ -357,7 +358,8 @@ The yield prediction/feature importance analysis was conducted using distributio
 "AM" indicates "ANOVA Model", and "HM" indicates "heritability model" (see Table 1 in the paper)
 - ANOVA to quantify Genotype × Time interaction with median VIs: [AM1 / HM1](https://rpubs.com/ajdesalvio/cotton_maize_anova1)
 - ANOVA to quantify heritability and Genotype variance for each time point with median VIs: [AM2 / HM2](https://rpubs.com/ajdesalvio/cotton_maize_anova2)
-- ANOVA to quantify heritability and Genotype variance for each quantile WITHIN time point: [AM3 / HM3](https://rpubs.com/ajdesalvio/cotton_maize_anova3)
+- ANOVA to quantify heritability and Genotype variance for each quantile WITHIN time point: [cotton AM3 / HM3](https://rpubs.com/ajdesalvio/cotton_maize_anova3); [G2F AM3 / HM3 BLUPs for variance components](R_files/ANOVA_per_Quantile_Within_DAP_BLUPs.R); [G2F AM3 / HM3 BLUEs for elastic net regression](R_files/ANOVA_per_Quantile_Within_DAP_BLUEs_HPRC_Parallel.R)
+     - Calculating BLUEs for the G2F data set required parallel processing using Texas A&M High Performance Research Computing resources (the Grace cluster). A .txt file was created with three columns: csv_file, edp_start, and edp_end. These columns represent the name of the CSV file containing raw distributional data, the starting index of the environment/DAP/probability level combination, respectively, since an ANOVA was performed at each unique intersection of those three variables. An example .txt file, `param_list_ExGR.txt`, is provided.
 - ANOVA to quantify Genotype × Time interaction at each quantile level: [AM4 / HM4](https://rpubs.com/ajdesalvio/cotton_maize_anova4)
 - ANOVA to quantify Genotype × Quantile interaction at each time point: [AM5 / HM5](https://rpubs.com/ajdesalvio/cotton_maize_anova5)
 
