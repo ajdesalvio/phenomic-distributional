@@ -1,0 +1,175 @@
+---
+title: "ANOVA Within Quantile Level Across DAT"
+author: "Aaron J. DeSalvio"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Libraries, message=FALSE, warning=FALSE}
+library(lubridate)
+library(lme4)
+library(lmerTest)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(data.table)
+```
+
+# Analysis of Variance - AM4 & HM4
+
+These ANOVA models quantify the extent of a Genotype × Time interaction at the other 99 quantile levels not tested by AM1 and HM1, but the formulas are identical.
+
+```{r Load distributional data}
+# Note - the distributional data files are too large to be stored on GitHub. Once you download them, save them to their own directory and replace their path below for data_path_server.
+# Replace data_path with the folder location where you downloaded all other data related to the repository.
+
+data_path <- 'D:/Users/aaron.desalvio/My Drive/TAMU/Murray Lab/Writing/Manuscripts/2025_Distributional_Data/CS24_Cotton/0.0_Data/'
+data_path_server <- '//murray_lab/FLIGHTS2/Processed2/Texas/CS24/MULTI/CS24-STEL/Data_Products/Individual_VIs/'
+RData_path <- 'D:/Users/aaron.desalvio/My Drive/TAMU/Murray Lab/Writing/Manuscripts/2025_Distributional_Data/CS24_Cotton/0.0_Data/RData/'
+csvs <- list.files(path = data_path_server, pattern = '\\.csv$')
+all_vis <- lapply(strsplit(as.character(csvs), '-'), '[', 6) %>% unlist()
+
+# Changing the csvs vector to only contain one element to reduce the duration of producing this RMarkdown file. If you'd like to run the entire loop with all VIs, comment out the next line
+csvs <- csvs[1]
+
+# We'll also only run a subset of quantile levels to speed up computation time. Comment out this line too if you'd like to run the entire loop, and also UNCOMMENT the line of code that's annotated with # UNCOMMENT HERE
+probabilities <- c(0.47, 0.48, 0.49)
+```
+
+# Loop to run ANOVA models with Genotype × Time interaction at all 100 quantile levels
+
+```{r ANOVA loop, message=FALSE, warning=FALSE}
+# Initialize empty lists to store results
+G_list <- list()
+VC_list <- list()
+
+for (i in 1:length(csvs)) {
+
+  current_vi <- all_vis[i]
+  print(paste('Current VI:', current_vi))
+
+  # Read data from CSV files
+  print(paste('Loading VI data frame for', current_vi))
+  df <- fread(paste0(data_path_server, 'CS24-STEL-MULTI-RTK-Distributions-', current_vi, '-FieldCoords.csv')) %>% as.data.frame() %>% arrange(DAT)
+  print(paste0('VI data frame loaded for ', current_vi, '!'))
+
+  # Remove low-quality DATs
+  DATs_exclude <- c(46, 71:72, 99:100)
+  df <- df %>% filter(!DAT %in% DATs_exclude)
+
+  # Remove plant that died early in the season
+  df <- df %>% filter(!Row_Range == '413_15')
+
+  # Basic plot for inspection of data
+  sort(unique(df$DAT))
+  df.plot <- df %>% filter(Pedigree == 5016, DAT == 140)
+  plot(df.plot$probability, df.plot$quantile)
+
+  # Vector for probability steps
+  #probabilities <- sort(unique(df$probability)) # UNCOMMENT HERE
+
+  # Loop over each environment
+  for (prob in probabilities) {
+  
+    # Subset data for the current DAT
+    df.subset <- df[df$probability == prob, ]
+    
+    # Convert variables to appropriate data types
+    df.subset$Range <- as.factor(df.subset$Range)
+    df.subset$Row <- as.factor(df.subset$Row)
+    df.subset$Replicate <- as.factor(df.subset$Replicate)
+    df.subset$Pedigree <- as.factor(df.subset$Pedigree)
+    df.subset$DAT <- as.factor(df.subset$DAT)
+
+    # Progress report
+    print(paste('ANOVA Model:', 'Quantile level', prob, 'VI', current_vi))
+      
+    # Fit the linear mixed-effects model after setting "Inf" and NaN as NA
+    response <- df.subset$quantile
+    response[is.na(response) | response == 'Inf' | is.nan(response) | response == '-Inf'] <- NA
+      
+    anova <- lmer(response ~
+                    (1 | Pedigree) +
+                    (1 | DAT) +
+                    (1 | Pedigree:DAT) +
+                    (1 | Range:DAT) +
+                    (1 | Row:DAT) +
+                    (1 | Replicate:DAT),
+                  data = df.subset)
+    
+    # Calculate RMSE
+    rmse_value <- sqrt(mean(residuals(anova)^2))
+    
+    # Calculate R-squared
+    R <- MuMIn::r.squaredGLMM(anova)[, "R2c"]  # Conditional R-squared
+    
+    # Extract variance components
+    VC <- as.data.frame(VarCorr(anova))
+    VC$Percent <- round(VC$vcov / sum(VC$vcov) * 100, 2)
+    
+    # Calculate heritability
+    nRep <- length(unique(df.subset$Replicate))
+    nFlight <- length(unique(df.subset$DAT))
+    Vg <- VC[VC$grp == "Pedigree", "vcov"]
+    Vgf <- VC[VC$grp == "Pedigree:DAT", "vcov"]
+    Ve <- VC[VC$grp == "Residual", "vcov"]
+    #heritability <- Vg / (Vg + (Vgf / nFlight) + (Ve / (nRep * nFlight)))
+    #heritability <- round(heritability, 3)
+    heritability <- Vg / (Vg + (Vgf) + (Ve / (nRep)))
+    heritability <- round(heritability, 3)
+      
+    # Add additional information to VC data frame
+    VC$Rmse <- rmse_value
+    VC$Heritability <- heritability
+    VC$R_squared <- R
+    VC$Vegetation.Index <- current_vi
+    print(VC)
+      
+    # Store VC in the list
+    VC_list[[paste(prob, current_vi, sep = '_')]] <- VC
+      
+    # Extract random effects for 'Pedigree'
+    G <- coef(anova)$Pedigree
+    G$Pedigree <- rownames(G)
+      
+    # Store G in the list
+    G_list[[paste(prob, current_vi, sep = '_')]] <- G
+
+  }
+  # Save RData for current loop iteration
+  save.image(paste0(RData_path, 'ANOVA_Within_Quantile_Across_DAT_', current_vi, '.RData'))
+}
+```
+
+## Save the ANOVA results
+
+```{r Save the ANOVA results}
+# Aggregate the results
+G_df <- do.call(rbind, G_list)
+VC_df <- do.call(rbind, VC_list)
+
+# View the first few rows of the results
+head(G_df)
+head(VC_df)
+
+# Data wrangling before exporting
+VC_df_cols <- colnames(VC_df)
+VC_df_cols <- VC_df_cols[!VC_df_cols %in% c('var1', 'var2')]
+VC_df <- VC_df[,VC_df_cols]
+VC_df$Prob_VI <- rownames(VC_df)
+VC_df$Probability <- lapply(strsplit(as.character(VC_df$Prob_VI), '_'), '[', 1) %>% unlist() %>% as.numeric()
+
+colnames(G_df)[1] <- 'BLUP'
+G_df$Prob_VI.Pedigree <- rownames(G_df)
+G_df$VI.Pedigree <- lapply(strsplit(as.character(G_df$Prob_VI.Pedigree), '_'), '[', 2) %>% unlist()
+G_df$Probability <- lapply(strsplit(as.character(G_df$Prob_VI.Pedigree), '_'), '[', 1) %>% unlist() %>% as.numeric()
+G_df$Vegetation.Index <- lapply(strsplit(as.character(G_df$VI.Pedigree), '\\.'), '[', 1)
+
+# Save the data frames
+#fwrite(VC_df, paste0(data_path, 'VarComp_Within_Quantile_Across_DAT_Revised_Herit.csv'))
+#fwrite(G_df, paste0(data_path, 'Quantile_BLUPs_Within_Quantile_Across_DAT_Revised_Herit.csv'))
+```
