@@ -29,6 +29,8 @@ Until I come up with a permanent storage solution for these files, please feel f
 
 [9 - Figures (in order of appearance)](#p9)
 
+[10 - Supplementary Figures (in order of appearance)](#p10)
+
 <br />
 
 <div id="installation" />
@@ -353,11 +355,11 @@ The yield prediction/feature importance analysis was conducted using distributio
      
 ### 8 - Calculation of heritability - ANOVA models
 "AM" indicates "ANOVA Model", and "HM" indicates "heritability model" (see Table 1 in the paper)
-- $\textbf{ANOVA to quantify Genotype × Time interaction with median VIs}$: [AM1 / HM1](https://rpubs.com/ajdesalvio/cotton_maize_anova1)
-- $\textbf{ANOVA to quantify heritability and Genotype variance for each time point with median VIs}$: [AM2 / HM2](https://rpubs.com/ajdesalvio/cotton_maize_anova2)
-- $\textbf{ANOVA to quantify heritability and Genotype variance for each quantile WITHIN time point}$: [AM3 / HM3](https://rpubs.com/ajdesalvio/cotton_maize_anova3)
-- $\textbf{ANOVA to quantify Genotype × Time interaction at each quantile level}$: [AM4 / HM4](https://rpubs.com/ajdesalvio/cotton_maize_anova4)
-- $\textbf{ANOVA to quantify Genotype × Quantile interaction at each time point}$: [AM5 / HM5](https://rpubs.com/ajdesalvio/cotton_maize_anova5)
+- ANOVA to quantify Genotype × Time interaction with median VIs: [AM1 / HM1](https://rpubs.com/ajdesalvio/cotton_maize_anova1)
+- ANOVA to quantify heritability and Genotype variance for each time point with median VIs: [AM2 / HM2](https://rpubs.com/ajdesalvio/cotton_maize_anova2)
+- ANOVA to quantify heritability and Genotype variance for each quantile WITHIN time point: [AM3 / HM3](https://rpubs.com/ajdesalvio/cotton_maize_anova3)
+- ANOVA to quantify Genotype × Time interaction at each quantile level: [AM4 / HM4](https://rpubs.com/ajdesalvio/cotton_maize_anova4)
+- ANOVA to quantify Genotype × Quantile interaction at each time point: [AM5 / HM5](https://rpubs.com/ajdesalvio/cotton_maize_anova5)
 
 <br />
 
@@ -365,43 +367,44 @@ The yield prediction/feature importance analysis was conducted using distributio
      
 ### 9 - Figures (in order of appearance)
 #### Figure 1 - methods overview
-This figure was made using PowerPoint. The associated PowerPoint file is saved in the PowerPoint_Figures directory (accessible [here](PowerPoint_Figures/Figure1.pptx)).
-
-<br />
+- This figure was made using PowerPoint. The associated PowerPoint file is saved in the PowerPoint_Figures directory (accessible [here](PowerPoint_Figures/Figure1.pptx)).
 
 #### Figure 2 - visualization of raw data
-This figure was made with a combination of [python](Python_files/Figure2.py) and [PowerPoint](PowerPoint_Figures/Figure2.pptx).
-
-<br />
+- This figure was made with a combination of [python](Python_files/Figure2.py) and [PowerPoint](PowerPoint_Figures/Figure2.pptx).
 
 #### Figure 3 - visualization of significant effects of cotton introgression segments on quantile data
-This figure was produced at the end of the Mixed function-on-scalar distributional regression model [R script](R_files/fastFMM_ExG2.R).
-
-<br />
+- This figure was produced at the end of the Mixed function-on-scalar distributional regression model [R script](R_files/fastFMM_ExG2.R).
 
 #### Figure 4 - variance components at each quantile level within DAP, variance components at each quantile level across DAPs
-This figure was produced using an [R script](R_files/Figure4.R), with multi-plot layout functionality provided by [cowplot](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html).
-
-<br />
-
-Maize supplementary figures 4-14 were produced using this [R script](R_files/Figure4_Maize.R).
-
-<br />
+- This figure was produced using an [R script](R_files/Figure4.R), with multi-plot layout functionality provided by [cowplot](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html).
+- Maize supplementary figures 4-14 were produced using this [R script](R_files/Figure4_Maize.R).
 
 #### Figure 5 - heritability heatmaps (HAMs)
-The cotton portion of the figure was produced with [this python script](Python_files/Figure5_Cotton.py), the maize portion of the figure was produced with [this python script](Python_files/Figure5_Maize.py), and the overall figure was assembled in [PowerPoint](PowerPoint_Figures/Figure5.zip).
-
-<br />
+- The cotton portion of the figure was produced with [this python script](Python_files/Figure5_Cotton.py), the maize portion of the figure was produced with [this python script](Python_files/Figure5_Maize.py), and the overall figure was assembled in [PowerPoint](PowerPoint_Figures/Figure5.zip).
 
 #### Figure 6 - correlations between actual and predicted grain yield across 11 G2F environments
-This [R script](R_files/Figure6.R) was used to generate the figure.
-
-<br />
+- This [R script](R_files/Figure6.R) was used to generate the figure.
 
 #### Figure 7 - feature importance of distributional data predictors
-This figure, as well as supplementary figures 16-26, were produced with this [R script](R_files/Figure7.R).
+- This figure, as well as supplementary figures 16-26, were produced with this [R script](R_files/Figure7.R).
+
+#### Figure 8 - correlation analysis of distributional quantile data
+- This figure was produced by this [R script](R_files/Figure8.R).
 
 <br />
 
-#### Figure 8 - correlation analysis of distributional quantile data
-This figure was produced by this [R script](R_files/Figure8.R).
+<div id="p10" />
+     
+### 10 - Supplementary Figures (in order of appearance)
+#### Figure S1 - ANOVA results from AM1 and AM2
+- This figure was produced using this [R script](R_files/FigureS1.R).
+
+#### Figure S2 - correlations between median heritability and flight time of day (cotton)
+- This figure was produced using this [R script](R_files/FigureS2.R).
+
+#### Figure S3 - correlations between median heritability and flight time of day (TXH1.2020 G2F)
+- This figure was produced using this [R script](R_files/FigureS3.R).
+
+#### Figure S15 - ANOVA results from AM5
+- This figure was produced using this [R script](R_files/FigureS15.R).
+
