@@ -375,7 +375,7 @@ The yield prediction/feature importance analysis was conducted using distributio
 - This figure was made with a combination of [python](Python_files/Figure2.py) and [PowerPoint](PowerPoint_Figures/Figure2.pptx).
 
 #### Figure 3 - visualization of significant effects of cotton introgression segments on quantile data
-- This figure was produced at the end of the Mixed function-on-scalar distributional regression model [R script](R_files/fastFMM_ExG2.R).
+- This figure was produced at the end of the mixed function-on-scalar distributional regression model [R script](R_files/fastFMM_ExG2.R).
 
 #### Figure 4 - variance components at each quantile level within DAP, variance components at each quantile level across DAPs
 - This figure was produced using an [R script](R_files/Figure4.R), with multi-plot layout functionality provided by [cowplot](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html).
