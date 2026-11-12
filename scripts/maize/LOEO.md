@@ -23,7 +23,7 @@ Rscript scripts/maize/run_loeo.R config/loeo.json output/projections output/loeo
 
 The runner fits only Median/all with within-environment scaling, sequentially. Append an environment such as `TXH1.2020` to fit just that environment. Repeat the command to resume matching checkpoints. Completion requires 22 models; partial summaries show their completed held-out counts. Keep refits separate from manuscript reference outputs.
 
-The pipeline retains 95% FVE per quantile, seed 123, environment-grouped inner folds, and caret's original `tuneLength=25` search. Saved outer-training FPCA is reused during inner tuning. Scaling uses the unlabeled held-out predictor cohort. This is not fully nested FPCA or single-plant deployment. Caret's historical lambda interpolation/clamping is retained and reported.
+The pipeline retains 95% FVE per quantile, seed 123, environment-grouped inner folds, and caret's original `tuneLength=25` search. Saved outer-training FPCA is reused during inner tuning. Scaling uses the unlabeled held-out predictor cohort. Caret's historical lambda interpolation/clamping is retained and reported.
 
 ## Optional FPCA preparation
 
@@ -41,4 +41,4 @@ Rscript scripts/maize/project_fpca.R config/loeo.json output/fresh_projections.c
 
 The default covers all 100 quantiles. Append `TXH1.2020 0.5` for one held-out environment and quantile. FPCA uses outer-training curves only; held-out curves are restricted to the training time range and require two observations. Diagnostic plots and R versions are saved alongside the CSV.
 
-Fresh FPCA is an optional reconstruction of the historical algorithm, not a certified recreation of every archived basis. Its output is deliberately not accepted by the frozen projection hash unless the configuration is explicitly changed for a new analysis. See [verification and limitations](../../provenance/loeo_cleanup.md).
+Fresh FPCA is an optional reconstruction of the historical algorithm, and its output is deliberately not accepted by the frozen projection hash unless the configuration is explicitly changed for a new analysis. See [verification and limitations](../../provenance/loeo_cleanup.md).
