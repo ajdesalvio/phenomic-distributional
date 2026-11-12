@@ -15,4 +15,4 @@ The primary comparison is **Median versus all 100 quantiles**, with adaptive sel
 
 Outputs retain their `_V15` names for compatibility. The aggregator requires all 11 completed environments, validates cohort/fold/support coverage, and reproduces the original repeat-wise summaries. Detailed tuning, coefficients, and preprocessing remain in each environment's directory.
 
-This analysis starts from frozen genotype BLUEs. First-stage spatial estimation and historical ExGR selection are outside these CV folds. Repeated-CV standard deviations are descriptive, not independent confidence intervals. See `provenance/nested_cv_cleanup.md` for cleanup verification.
+This analysis starts from frozen genotype BLUEs. First-stage spatial estimation and historical ExGR selection are outside these CV folds. Repeated-CV standard deviations are descriptive. See `provenance/nested_cv_cleanup.md` for cleanup verification.
