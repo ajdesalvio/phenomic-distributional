@@ -3,7 +3,7 @@
 Reproduce the revised manuscript from its frozen inputs, or run the separately documented model fits. Fresh ExGR fitting can produce different BLUEs; see [optimizer sensitivity](provenance/optimizer_sensitivity.md).
 
 1. Follow [software setup](environment/README.md).
-2. Choose a workflow below and obtain its inputs. [Configured inputs](data/configured_inputs.csv) lists paths and hashes across all configurations; [G2F imagery DOIs](data/G2F_COLLECTIONS.md) are supplied; processed-input downloads are still pending. Edit paths in the relevant `config/*.json`; relative paths start from that configuration file.
+2. Choose a workflow below and obtain its inputs. [Configured inputs](data/configured_inputs.csv) lists paths and hashes across all configurations; [G2F imagery DOIs](data/G2F_COLLECTIONS.md) are supplied; [processed-data download and extraction instructions](data/DOWNLOADS.md) describe the prepared release (journal DOI pending). Edit paths in the relevant `config/*.json`; relative paths start from that configuration file.
 3. Run commands from this package's root. Quote paths containing spaces. Use new output locations unless a guide explicitly describes checkpoint resume.
 
 | Task | Guide |

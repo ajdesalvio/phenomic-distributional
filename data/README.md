@@ -1,5 +1,7 @@
 # Inputs
 
+Start with the [release download and extraction guide](DOWNLOADS.md). The journal repository DOI is pending.
+
 Large data are not bundled in this review package. `published_inputs.csv` lists the exact manuscript filenames and MD5 hashes; the configuration contains the same identities. Relative paths resolve from the configuration directory.
 
 The frozen BLUEs and support table are the manuscript reference. The combined yield file includes flowering traits, but `fit_yield_blue.R` regenerates only yield. Archive recovery additionally requires the saved `20250821_Elastic_Net_V9_Home.RData` workspace containing `blue.filt`.

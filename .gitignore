@@ -11,3 +11,4 @@ __pycache__/
 *.pyc
 *.partial
 !data/G2F_COLLECTIONS.md
+!data/DOWNLOADS.md
