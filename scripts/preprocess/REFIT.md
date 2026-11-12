@@ -14,4 +14,4 @@ Rscript scripts/preprocess/export_exgr.R --plan=output/plan/ExGR_Plan.rds --chun
 Rscript scripts/preprocess/compare_exgr.R --rebuilt=output/rebuilt/Quantile_BLUEs_G2F_Distributional_ExGR.csv --reference=BLUE_REFERENCE.csv --status=output/rebuilt/Model_Status.csv --output=output/comparison
 ```
 
-A comparison failure preserves the rebuilt estimates and discrepancy reports. The 10^-7 tolerance is a numerical diagnostic threshold, not a threshold of biological importance. Do not automatically replace manuscript inputs after refitting. See [optimizer sensitivity](../../provenance/optimizer_sensitivity.md).
+A comparison failure preserves the rebuilt estimates and discrepancy reports. The 10^-7 tolerance is strictly a numerical diagnostic threshold. Do not automatically replace manuscript inputs after refitting. See [optimizer sensitivity](../../provenance/optimizer_sensitivity.md).
