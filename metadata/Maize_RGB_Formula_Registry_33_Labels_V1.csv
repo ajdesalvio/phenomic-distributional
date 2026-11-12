@@ -1,0 +1,39 @@
+Vegetation.Index,Python_Formula,Source_Line,Canonical_Index,Affine_Equivalence,Include_In_Aggregate,Scale
+BCC,(B/scale) / ((R/scale) + (G/scale) + (B/scale)),37,BCC,,True,255; channels scaled before expression
+BGI,(B/scale) / (G/scale),38,BGI,,True,255; channels scaled before expression
+BI,np.sqrt(((R/scale)**2 + (G/scale)**2 + (B/scale)**2) / 3),39,BI,,True,255; channels scaled before expression
+CIVE,0.441*(R/scale) - 0.811*(G/scale) + 0.385*(B/scale) + 18.78745,40,CIVE,,True,255; channels scaled before expression
+COM1,"(2*(G/scale) - (R/scale) - (B/scale)) 
+                                 + (0.441*(R/scale) - 0.811*(G/scale) + 0.385*(B/scale) + 18.78745) 
+                                 + (3*(G/scale) - 2.4*(R/scale) - (B/scale)) 
+                                 + ((G/scale) / ((R/scale)**0.667 * (B/scale)**0.334))",41,COM1,,True,255; channels scaled before expression
+COM2,"0.36*(2*(G/scale) - (R/scale) - (B/scale)) 
+                                 + 0.47*(0.441*(R/scale) - 0.811*(G/scale) + 0.385*(B/scale) + 18.78745)
+                                 + 0.17*((G/scale) / ((R/scale)**0.667 * (B/scale)**0.334))",45,COM2,,True,255; channels scaled before expression
+ExG,2*(G/scale) - (R/scale) - (B/scale),48,ExG,,True,255; channels scaled before expression
+ExG2,(2*(G/scale) - (R/scale) - (B/scale)) / ((R/scale) + (G/scale) + (B/scale)),49,ExG2,,True,255; channels scaled before expression
+ExGR,3*(G/scale) - 2.4*(R/scale) - (B/scale),50,ExGR,,True,255; channels scaled before expression
+EXR,1.4*(R/scale) - (G/scale),51,EXR,,True,255; channels scaled before expression
+GminusB,(G/scale) - (B/scale),52,GminusB,,True,255; channels scaled before expression
+GminusR,(G/scale) - (R/scale),53,GminusR,,True,255; channels scaled before expression
+GdivB,(G/scale) / (B/scale),54,GdivB,,True,255; channels scaled before expression
+GdivR,(G/scale) / (R/scale),55,GdivR,,True,255; channels scaled before expression
+GCC,(G/scale) / ((R/scale) + (G/scale) + (B/scale)),56,ExG2,ExG2 = 3*GCC - 1,False,255; channels scaled before expression
+GLI,(2*(G/scale) - (R/scale) - (B/scale)) / (2*(G/scale) + (R/scale) + (B/scale)),57,GLI,,True,255; channels scaled before expression
+MExG,1.262*(G/scale) - 0.884*(R/scale) - 0.311*(B/scale),58,MExG,,True,255; channels scaled before expression
+MGVRI,((G/scale)**2 - (R/scale)**2) / ((G/scale)**2 + (R/scale)**2),59,MGVRI,,True,255; channels scaled before expression
+MRCCbyAlper,((R/scale)**3) / ((R/scale) + (G/scale) + (B/scale)),60,MRCCbyAlper,,True,255; channels scaled before expression
+MSRGR,np.sqrt((G/scale) / (R/scale)),61,MSRGR,,True,255; channels scaled before expression
+NDI,128 * ((((G/scale) - (R/scale)) / ((G/scale) + (R/scale))) + 1),62,NGRDI,NDI = 128*(NGRDI + 1),False,255; channels scaled before expression
+NDRBI,((R/scale) - (B/scale)) / ((R/scale) + (G/scale)),63,NDRBI,,True,255; channels scaled before expression
+NGBDI,((G/scale) - (B/scale)) / ((G/scale) + (B/scale)),64,NGBDI,,True,255; channels scaled before expression
+NGRDI,((G/scale) - (R/scale)) / ((G/scale) + (R/scale)),65,NGRDI,,True,255; channels scaled before expression
+NRMBI,((R/scale) - (B/scale)) / (G/scale),66,NRMBI,,True,255; channels scaled before expression
+RCC,(R/scale) / ((R/scale) + (G/scale) + (B/scale)),67,RCC,,True,255; channels scaled before expression
+RdivB,(R/scale) / (B/scale),68,RdivB,,True,255; channels scaled before expression
+RGBVI,((G/scale)**2 - (R/scale)*(B/scale)) / ((G/scale)**2 + (R/scale)*(B/scale)),69,RGBVI,,True,255; channels scaled before expression
+RminusB,(R/scale) - (B/scale),70,RminusB,,True,255; channels scaled before expression
+TGI,(G/scale) - (0.39*(R/scale) - 0.69*(B/scale)),71,TGI,,True,255; channels scaled before expression
+TNDGR,np.sqrt((((G/scale) - (R/scale)) / ((G/scale) + (R/scale))) + 0.5),72,TNDGR,,True,255; channels scaled before expression
+VARI,((G/scale) - (R/scale)) / ((G/scale) + (R/scale) - (B/scale)),73,VARI,,True,255; channels scaled before expression
+VEG,(G/scale) / ((R/scale)**0.667 * (B/scale)**0.334),74,VEG,,True,255; channels scaled before expression

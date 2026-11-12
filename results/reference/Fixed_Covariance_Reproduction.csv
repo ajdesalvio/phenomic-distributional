@@ -1,0 +1,3 @@
+Method,Models,MaxArchivedDifference,MaxRebuiltDifference
+archive_covariance,18,4.49640324973188e-14,0.0013947903975241
+rebuilt_covariance,18,0.00139479039752921,6.5447647301653e-14

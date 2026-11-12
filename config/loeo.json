@@ -1,0 +1,28 @@
+{
+  "environments": [
+    "IAH4.2021",
+    "MIH1.2020",
+    "MNH1.2020",
+    "MNH1.2021",
+    "TXH1.2020",
+    "TXH2.2021",
+    "WIH1.2021",
+    "WIH2.2020",
+    "WIH2.2021",
+    "WIH3.2020",
+    "WIH3.2021"
+  ],
+  "yield": {
+    "path": "../data/Yield_DTA_DTS_BLUEs_G2F_2020_2021.csv",
+    "md5": "c86ab375f4aae03148bf41ebbb9af180"
+  },
+  "blue": {
+    "path": "../data/Quantile_BLUEs_G2F_Distributional_ExGR_Recovered_V9.csv",
+    "md5": "cddaa68371a789775de6d043033b082c"
+  },
+  "projection_sha256": "b52f0b2b6aef16c5db05c385e8c5584dd203f2c70740c98c0ce1fd9e067f1020",
+  "archive": {
+    "path": "../data/20260516_Elastic_Net_Projected_FPCs_ExGR_AllQuantiles_Median_SC_WITHIN.rds",
+    "sha256": "5b4b71af615eb3fd1c6fd933c712542d108c171258d15fa390f060bd778e7a08"
+  }
+}

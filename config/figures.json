@@ -1,0 +1,61 @@
+{
+  "environments": [
+    "IAH4.2021",
+    "MIH1.2020",
+    "MNH1.2020",
+    "MNH1.2021",
+    "TXH1.2020",
+    "TXH2.2021",
+    "WIH1.2021",
+    "WIH2.2020",
+    "WIH2.2021",
+    "WIH3.2020",
+    "WIH3.2021"
+  ],
+  "inputs": {
+    "contrasts": {
+      "path": "../data/figures/genotype_contrasts_V7.csv",
+      "sha256": "815d6b2ec9da6cb2c8ced4ed9eb11fa879c7540c2e6d1544e127bc7b0de8fd05"
+    },
+    "cot_metrics": {
+      "path": "../data/figures/Fit_Metrics_V6.csv",
+      "sha256": "9a891fa219a3a9cfb442e2920b02743cf2c80f316da87da2d86f6b75740164d5"
+    },
+    "cot_components": {
+      "path": "../data/figures/Full_Components_V6.csv",
+      "sha256": "8f794cbd19f1a7554c26c7e213df341266a0dcf0a79efa8c06682ee8aecd00fa"
+    },
+    "maize_components": {
+      "path": "../data/figures/Maize_Figure_Component_Data_V1.csv",
+      "sha256": "8325bff5d79d1eb70e1be047316c048721700c557705b4242b79cdbde114dd58"
+    },
+    "maize_flight": {
+      "path": "../data/figures/Maize_Flight_Time_Data_V1.csv",
+      "sha256": "67aa52bba18bf92999b53025b0783bdfe571dc0c08b26759f2247f4ddeb7fc30"
+    },
+    "cotton_flight": {
+      "path": "../data/figures/Flight_Date_DAT_Conversion_Time_of_Day.csv",
+      "sha256": "b601630510aa908d5957395ce42c8309555553c0af952e1747ed1bd4eea83c85"
+    },
+    "nested_summary": {
+      "path": "../data/figures/Environment_Scenario_Summary_V15.csv",
+      "sha256": "553f7337f910419675f985b3d98ca25b6cb04987e189b0f97ce05847e73bca09"
+    },
+    "nested_repeats": {
+      "path": "../data/figures/Outer_Repeat_Metrics_V15.csv",
+      "sha256": "2a575021ea35e7e742ab288baf64b68fb6032211eed291bfd2984d685c9faf98"
+    },
+    "loeo_metrics": {
+      "path": "../data/figures/Combined_Metrics_88_Refit_132_Historical_V1.csv",
+      "sha256": "72bc402cec906deead9409a6d1cb10e66020731bfa587e4984fc18cec6e3e7dc"
+    },
+    "importance": {
+      "path": "../data/figures/Figure7_S16_S26_Importance_Data_V3.csv",
+      "sha256": "a902944a891aa9b92b7801351730ad8b6c4245ddf461561fc9a50d9ac66f42fa"
+    },
+    "correlations": {
+      "path": "../data/figures/Figure8_Plotted_Correlations_V5.csv",
+      "sha256": "245d3d497d8b40845523033bbcb0dfd3fb8d9e2256b70026e14ec9e043ea0851"
+    }
+  }
+}

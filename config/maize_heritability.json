@@ -1,0 +1,31 @@
+{
+  "components": {
+    "path": "../data/VarComp_per_Quantile_Within_DAP_RGB_VIs.csv",
+    "sha256": "c1ff915fe1d5beeb7a3998070a2877caf312e2d43b399d867083c72357020ad6"
+  },
+  "environments": [
+    "IAH4.2021",
+    "MIH1.2020",
+    "MNH1.2020",
+    "MNH1.2021",
+    "TXH1.2020",
+    "TXH2.2021",
+    "WIH1.2021",
+    "WIH2.2020",
+    "WIH2.2021",
+    "WIH3.2020",
+    "WIH3.2021"
+  ],
+  "excluded_dates": [
+    -33,
+    -9,
+    -3,
+    0,
+    1,
+    5
+  ],
+  "flight_times": {
+    "path": "../data/Flight_Date_DAP_Conversion_G2F_Time_of_Day.csv",
+    "sha256": "445c548aaa5e864543351b0523d748d7059d7e61b09ffb0484aeffd7e33794bf"
+  }
+}

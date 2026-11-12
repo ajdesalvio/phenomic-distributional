@@ -1,0 +1,86 @@
+{
+  "inputs": {
+    "PSRI": {
+      "path": "../data/20250331_fastFMM_V4_PSRI.RData",
+      "md5": "4e52a1342a99084d2723e01f45d6e4af"
+    },
+    "CVI": {
+      "path": "../data/20250401_fastFMM_V4_CVI.RData",
+      "md5": "ab4ffb1e053bf75b884798e1c7e27d70"
+    },
+    "ExG2": {
+      "path": "../data/20250401_fastFMM_V4_ExG2.RData",
+      "md5": "dac1ff666f31a1c1e288edcaacce3753"
+    }
+  },
+  "fieldmap": {
+    "path": "../data/FnB2024_Fieldmap_AJD_V10_for_tablet.csv",
+    "md5": "f1668febfce5dd3656cb51a1f1a42bc6"
+  },
+  "functional": {
+    "mode": "inspect",
+    "vi": "ExG2",
+    "resume": false,
+    "draws": 4999,
+    "batch_size": 64,
+    "seed": 20260924,
+    "cores": 1,
+    "alpha": 0.05,
+    "maxfun": 5000,
+    "smoke_dates": [
+      57,
+      86,
+      96,
+      113,
+      130
+    ],
+    "smoke_indices": [
+      1,
+      12,
+      23,
+      34,
+      45,
+      56,
+      67,
+      78,
+      89,
+      100
+    ],
+    "df_probabilities": [
+      0.01,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "excluded_dates": [
+      46,
+      71,
+      72,
+      99,
+      100
+    ],
+    "excluded_plants": "5011_018",
+    "max_basis": 51,
+    "smooth_method": "GCV.Cp",
+    "inference": "CR2_adjusted_Plant_Rademacher_wild_bootstrap_t_fixed_GLS_weights_fixed_smoothers_joint15_grid"
+  },
+  "reference": {
+    "heritability": {
+      "path": "../data/cotton_reference/Fit_Metrics_V6.csv",
+      "sha256": "9a891fa219a3a9cfb442e2920b02743cf2c80f316da87da2d86f6b75740164d5"
+    },
+    "PSRI": {
+      "path": "../data/cotton_reference/PSRI/functional_model_V7.rds",
+      "sha256": "6e80d1009a509f6e669403767bd1b74280c17a4307a7fef354a32995294b4712"
+    },
+    "CVI": {
+      "path": "../data/cotton_reference/CVI/functional_model_V7.rds",
+      "sha256": "322e0da7c27be89bc8e945ee2f53109c748402bbd6116a29be19ee4e6f065ce6"
+    },
+    "ExG2": {
+      "path": "../data/cotton_reference/ExG2/functional_model_V7.rds",
+      "sha256": "fdfb06fb9f3bed1b64b9f4d9a5e2347a448fc51570bced4befd4e993430d47be"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "inputs": {
+    "raw": {
+      "path": "../data/2020_2021_G2F_TIFs_Renamed_RGB_VIs_Distributions_Hue_FieldInfo_ExGR.csv",
+      "md5": "bffff358192c4db05c7ef90c715557a5"
+    },
+    "blue": {
+      "path": "../data/Quantile_BLUEs_G2F_Distributional_ExGR_Recovered_V9.csv",
+      "md5": "cddaa68371a789775de6d043033b082c"
+    },
+    "support": {
+      "path": "../data/Quantile_Raw_Support_G2F_ExGR_V1.csv",
+      "md5": "a0c8cad4ecfffcc3fb184407f57efe20"
+    },
+    "yield": {
+      "path": "../data/Yield_DTA_DTS_BLUEs_G2F_2020_2021.csv",
+      "md5": "c86ab375f4aae03148bf41ebbb9af180"
+    },
+    "field_map": {
+      "path": "../data/2020_2021_G2F_TIFs_Pheno_Data_V2.csv",
+      "md5": "17372123e29045abc189a5218b9c4211"
+    },
+    "support_provenance": {
+      "path": "../data/Quantile_Raw_Support_G2F_ExGR_V1.csv.provenance.rds",
+      "md5": "f06e9d7c0d740cebb245c9aae630156e"
+    }
+  },
+  "support_builder_md5": "d44f80dba54f6164f368cf7cfd64beb2",
+  "environments": [
+    "IAH4.2021",
+    "MIH1.2020",
+    "MNH1.2020",
+    "MNH1.2021",
+    "TXH1.2020",
+    "TXH2.2021",
+    "WIH1.2021",
+    "WIH2.2020",
+    "WIH2.2021",
+    "WIH3.2020",
+    "WIH3.2021"
+  ]
+}

@@ -1,0 +1,13 @@
+data/*
+!data/README.md
+!data/published_inputs.csv
+!data/configured_inputs.csv
+!data/ham_*.csv
+output/
+.Rhistory
+.RData
+Rplots.pdf
+__pycache__/
+*.pyc
+*.partial
+!data/G2F_COLLECTIONS.md

@@ -1,0 +1,40 @@
+[
+  {
+    "source": "Corn_Cotton-Distributional_V75_Accepted.docx",
+    "source_sha256": "3eff2119fb5c92eed978da6402d47b762d1a15ea77b1ee73ac088350548672a2",
+    "table_index": 0,
+    "output": "metadata/Table1_Model_Scope.csv",
+    "rows": 3,
+    "policy": "Visible cell text; deleted revisions excluded; vertically merged labels repeated."
+  },
+  {
+    "source": "Supplementary_Materials_Tracked_V10.docx",
+    "source_sha256": "e68e4992d40a51dc5aadae1cbdf80800d97bf031b4bedb6dd5b80ffd6af0ca45",
+    "table_index": 0,
+    "output": "metadata/TableS1_Cotton_Genotypes.csv",
+    "rows": 17,
+    "policy": "Visible cell text; deleted revisions excluded; vertically merged labels repeated."
+  },
+  {
+    "source": "2025_Distributional_Data/CS24_Cotton/4.1_Preliminary_Figures/Methods/Methods_V8.pptx",
+    "output": "legacy/package_v7/Figure1_reference.pptx",
+    "sha256": "a6cd420522cbc020d0ac8a358e43c8fea51d0ab9189b9dd6f0fcf7ae8d92416a"
+  },
+  {
+    "source": "2025_Distributional_Data/CS24_Cotton/5.1_Manuscript_Upload_V7_V15/Figures/Final_Raw_Quantiles_V1/Figure2_Quantile_Functions_V1.pptx",
+    "output": "figures/source/Figure2.pptx",
+    "sha256": "bc0c3c5e2d83dc1218cf9d034a75b2e62b9071d9d54c3d1c4e8421541190a802"
+  },
+  {
+    "source": "2025_Distributional_Data\\CS24_Cotton\\5.1_Manuscript_Upload_V7_V15\\Figures_600DPI_V1\\Figure1.jpg",
+    "output": "figures/source/Figure1.jpg",
+    "sha256": "75b740596714e9a646ea0a2fee3b8f7c0dbbe35cb493441eaff13f0dd7fa1679",
+    "status": "Corrected author copy received 12 November 2026; flight start is 17 April 2024"
+  },
+  {
+    "source": "2025_Distributional_Data\\CS24_Cotton\\5.1_Manuscript_Upload_V7_V15\\Figures_600DPI_V1\\Figure1.pptx",
+    "output": "figures/source/Figure1.pptx",
+    "sha256": "eb6f2ecb1ec86bf143c230a96ad7163fcfbcbaeb78630d34220b0df3d639d98b",
+    "status": "Corrected author copy received 12 November 2026; flight start is 17 April 2024"
+  }
+]

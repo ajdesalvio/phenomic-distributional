@@ -1,0 +1,11 @@
+# Run from the package root: Rscript validation/check_loeo.R
+suppressPackageStartupMessages(library(data.table))
+source('src/loeo.R')
+stopifnot(identical(parse_quantile(paste0('FPC1.ExGR.',1:100/100)),1:100))
+stopifnot(inherits(try(parse_quantile('FPC1.ExGR.invalid'),silent=TRUE),'try-error'))
+x <- data.frame(a=c(1,2,3,10,20,30),constant=rep(1,6))
+z <- scale_env(x,rep(c('train','heldout'),each=3))
+stopifnot(all(z$constant==0),identical(z$a[1:3],z$a[4:6]))
+x$a[4:6] <- c(30,100,800)
+stopifnot(identical(z[1:3,],scale_env(x,rep(c('train','heldout'),each=3))[1:3,]))
+cat('Parser, constant-feature scaling, and environment-isolation checks passed.\n')

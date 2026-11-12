@@ -1,0 +1,39 @@
+{
+  "inputs": {
+    "cotton_h2": {
+      "path": "../data/ham_cotton_h2.csv",
+      "sha256": "f80da671384a4b12a9667d5644bc52288d13d2e8043dbcf08cfeacada582c017"
+    },
+    "maize_h2": {
+      "path": "../data/ham_maize_h2.csv",
+      "sha256": "bf6b54c2f830ccff1a40b5d95a8a4b13b52c546595a559c6268724ed5a153620"
+    },
+    "cotton_dates": {
+      "path": "../data/ham_cotton_dates.csv",
+      "sha256": "7b3bb6002630dcf8044f335b863a844c239259efa151a10d8ab0307820a1adf8"
+    },
+    "maize_dates": {
+      "path": "../data/ham_maize_dates.csv",
+      "sha256": "93e774fba4d71bded6353f83708ca11a521f0dc24b07e92cfcdb64391e1acb12"
+    },
+    "image_manifest": {
+      "path": "../data/ham_image_manifest.csv",
+      "sha256": "02ebfd09ae5644f30615d1c4636b816fa00a1e81f07a4e417c366d1245a7b72d"
+    }
+  },
+  "cotton_images": "../data/ham_images/cotton",
+  "maize_images": "../data/ham_images/maize",
+  "image_sha256": {
+    "20240608_337_03_masked.tif": "7d2be990389714a030c48e7967270c6bc1b8563ba6b4c9f4bec615f8249431f4",
+    "20240707_337_03_masked.tif": "b9e78cb5d9745a857211fcfa0e0eb5db407176105e1e3146db1f677c788f8b6c",
+    "20240717_337_03_masked.tif": "8aa65d34f41c5b42d05a94cf434a56820d40c7de0bdfca9f5b14f717afa9d744",
+    "20240803_337_03_masked.tif": "9724d65c40a8bc2bd5bec89e7aae758c3e3fe1e1611dbf0ab099094ffe0bfd83",
+    "20240820_337_03_masked.tif": "fd6936f77a57ea109672c5684c10b6d57be2252f289b3357d504689fedabbee8",
+    "20200408-CS20-G2F1-031_masked.tif": "b4319c29433961f8cfbdfaa3f5a9e41b10665a6937f91d0a30f2313739b3261b",
+    "20200427-CS20-G2F1-031_masked.tif": "bb90667db0cb08cb9f609cb85811db6dcf3060f0de49a699ac1accc4ff80cfaa",
+    "20200518-CS20-G2F1-031_masked.tif": "67894ad7f1519322e807d6571ab76088ed248ec8a8cd85e611978e4e445f9d84",
+    "20200607-CS20-G2F1-031_masked.tif": "7bf3d28f3b94fc0a4e4fa7a4c54b884cb35fb721d3166b4be0519f4a10d20375",
+    "20200615-CS20-G2F1-031_masked.tif": "68f5b9e359c8258cf649b8f35db1607c984130a65cdd5bf3ad0e2cba76fecc01",
+    "20200630-CS20-G2F1-031_masked.tif": "312c40bd134538c82e03a6df6c119b2903caae1e569fd799ca38f154b80e4e4f"
+  }
+}

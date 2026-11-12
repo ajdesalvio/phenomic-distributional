@@ -1,0 +1,4 @@
+Vegetation.Index,Formula,Reference,MedianH2
+PSRI,(R - G)/RE,NV5 Geospatial Solutions (2025),0.179728693811376
+CVI,NIR * R / G^2,Soft.Farm (2025),0.140574433444057
+ExG2,(2*G - R - B)/(R + G + B),Formula stated explicitly,0.169643596103854

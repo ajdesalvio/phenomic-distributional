@@ -1,0 +1,18 @@
+RELEASE CHECKLIST - 2026-11-12
+
+Before publishing a complete reproduction release:
+1. Supply public download locations and citations for external files listed in data/configured_inputs.csv. There are 50 role/path entries (5 bundled, 45 external), including duplicated inputs used by different workflows. These are not 45 unique files. Publish the saved V15 environment outputs as well if users should regenerate feature summaries without rerunning CV.
+2. Supply optional input archives identified in preparation/FPCA guides if advertising those reconstruction paths: BLUE RData workspace, original 2020/2021 yield phenotype files, and five archived projection parts. Keep frozen inputs distinct from fresh refits.
+3. Completed: corrected Figure 1 PPTX/JPEG received and verified (17 April 2024).
+4. Completed: MIT code and CC BY 4.0 documentation/artwork licenses added with scope exceptions. Final paper/data citation metadata remains pending.
+5. Review the proposed legacy/pre_revision/ snapshot and current root workflows before approving the push. All 43 existing repository files are preserved unchanged; historical extraction/masking is not newly certified.
+
+Reproducibility limits to retain:
+- Versions are recorded direct dependencies, not a fully locked R environment. Functional fitting requires clubSandwich 0.7.0. This computer has that package in a separate manuscript R library; users must install it or expose their custom library.
+- Windows/Arial figure parity was checked; Linux/macOS rendering and fresh-environment installation were not validated.
+- Saved-result reconstruction has been verified. Fresh ExGR optimizer sensitivity, historical maize convergence, and complete original FPCA-basis execution provenance remain qualified in the module audits.
+- Byte-pinned figure inputs are frozen result artifacts. New exports can use different filenames or serialization; numerical parity alone does not authorize bypassing hashes. Configure replacement inputs explicitly after checking them.
+
+Integration is still local. No repository files have been replaced, no GitHub push has occurred, and no manuscript analyses were rerun during this final packaging review.
+
+The relevant 11 G2F imagery DOI entries are now supplied in data/G2F_COLLECTIONS.md. Processed inputs and cotton data still need separate download locations.

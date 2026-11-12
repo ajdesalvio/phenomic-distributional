@@ -1,0 +1,37 @@
+[
+  {
+    "input": "MapReady_Selected_Complete_Curves_V5.csv",
+    "input_sha256": "c1cb65fe98fa73118cb00d6b307da348c8cf881fe89b620d3996938e991df59c",
+    "excerpt": "data/ham_cotton_h2.csv",
+    "rows": 500,
+    "sha256": "f80da671384a4b12a9667d5644bc52288d13d2e8043dbcf08cfeacada582c017"
+  },
+  {
+    "input": "Maize_AM3_RGB_CombinedEnvironments_MapReady_V2.csv",
+    "input_sha256": "037a74f9768b4d61bcae1aa5aab9f1b125c466c0debff07d2b4af80ffea0b211",
+    "excerpt": "data/ham_maize_h2.csv",
+    "rows": 600,
+    "sha256": "bf6b54c2f830ccff1a40b5d95a8a4b13b52c546595a559c6268724ed5a153620"
+  },
+  {
+    "input": "Flight_Date_DAT_Conversion.csv",
+    "input_sha256": "02a91721e07a1991279589a4ef0c90938cc4e8a7d41a15d0b6b41bc881e33902",
+    "excerpt": "data/ham_cotton_dates.csv",
+    "rows": 5,
+    "sha256": "7b3bb6002630dcf8044f335b863a844c239259efa151a10d8ab0307820a1adf8"
+  },
+  {
+    "input": "Flight_Date_DAP_Conversion_G2F.csv",
+    "input_sha256": "bcc868d05aae535d2379cc965278c391030298ec0ab44b4ec141b7978434e6c0",
+    "excerpt": "data/ham_maize_dates.csv",
+    "rows": 6,
+    "sha256": "93e774fba4d71bded6353f83708ca11a521f0dc24b07e92cfcdb64391e1acb12"
+  },
+  {
+    "input": "File_Name_TIFs_JPGs.csv",
+    "input_sha256": "0d70ca632c2492137370d6a0b184efa9e490b36abb8125df7973a39e900e5cd7",
+    "excerpt": "data/ham_image_manifest.csv",
+    "rows": 6,
+    "sha256": "02ebfd09ae5644f30615d1c4636b816fa00a1e81f07a4e417c366d1245a7b72d"
+  }
+]

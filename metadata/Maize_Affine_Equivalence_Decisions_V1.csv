@@ -1,0 +1,3 @@
+Vegetation.Index,Python_Formula,Source_Line,Canonical_Index,Affine_Equivalence,Include_In_Aggregate,Scale
+GCC,(G/scale) / ((R/scale) + (G/scale) + (B/scale)),56,ExG2,ExG2 = 3*GCC - 1,False,255; channels scaled before expression
+NDI,128 * ((((G/scale) - (R/scale)) / ((G/scale) + (R/scale))) + 1),62,NGRDI,NDI = 128*(NGRDI + 1),False,255; channels scaled before expression

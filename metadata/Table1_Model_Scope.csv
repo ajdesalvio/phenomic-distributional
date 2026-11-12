@@ -1,0 +1,3 @@
+Crop and unit,Response,Random intercepts,Fitting scope
+Cotton (single plants),VI quantile,Genotype + Block,"Separate date, VI, and quantile"
+Maize (whole plots),VI quantile,Genotype + Range + Row + Replicate,"Separate environment, date, VI, and quantile"
