@@ -1,30 +1,30 @@
 # Cotton cleanup verification
 
-The source models are full-season block-only heritability V6, its V5 formula/input helpers, and functional comparison V7. Their numbered originals and all manuscript outputs remain untouched.
+The cotton workflow draws on the V6 full-season heritability models, their V5 formula and input functions, and the V7 functional comparisons. The numbered originals and manuscript outputs provide the reference for the checks below.
 
 ## Changes
 
-- Shared numerical functions were extracted without changing their bodies or arguments: seven heritability functions and fifteen functional functions.
-- Small command-line runners replace local paths and superseded orchestration. Heritability runs sequentially and writes separate date checkpoints; the original V5 replay is no longer a runtime dependency.
-- Functional setup uses installed R libraries rather than a drive-specific dependency directory. The original package checks, random-number generator, defaults, and model/inference routines remain. Provenance now fingerprints the engine and input helper as well as the runner.
-- A reference exporter regenerates tables from pinned saved estimates without fitting. Heritability summary expressions preserve the original manuscript table calculations.
+- The current scripts share seven heritability functions and fifteen functional functions from the original code.
+- The heritability command runs in sequence and saves a checkpoint for each date. It uses the V5 helpers directly.
+- The functional command uses installed R libraries. It retains the original package checks, random number generator, defaults, and inference routines. Its provenance records checksums for the runner, model code, and input helper.
+- The exporter uses saved estimates to rebuild the tables with the original heritability summary calculations.
 
 ## Evidence
 
-- All 22 extracted function definitions match their source exactly.
-- The public heritability smoke command validates all three original long/wide inputs and fits nine models. Vg, Vb, Ve, and heritability agree with production within 1e-10; cohort hashes match exactly.
-- All 30,300 saved heritability estimates satisfy the original formula. All six heritability summary tables reproduce manuscript tables within 1e-12.
-- Functional scientific defaults match production for all three VIs. The ExG2 input preparation reproduces the complete cohort and design: 47,807 plant-date observations, 479 plants, 101 dates, 16 genotypes, ten blocks, and fixed-design rank 125. The public inspection command also passes.
-- All functional contrast/band and adjusted-mean tables reproduce saved outputs within 1e-12. Smoothing, propagated covariance, and standard errors recalculated from all 300 saved point fits match within 1e-10.
-- All 4,999 bootstrap weight vectors per VI match exactly. Replaying the first three draws per VI matches saved bootstrap-t statistics within 1e-10. Joint and per-curve critical values reproduce the saved draw summaries.
-- A synthetic repeated-measures fit gives identical original/cleaned coefficients, variance components, CR2 calculations, and diagnostics, excluding elapsed time.
+- All 22 extracted function definitions match the originals exactly.
+- The heritability smoke test checks the long and wide inputs for all three vegetation indices and fits nine models. The estimates of Vg, Vb, Ve, and heritability agree with the production results within 1e-10. The cohort checksums match exactly.
+- All 30,300 saved heritability estimates satisfy the original formula. All six summary tables match the manuscript tables within 1e-12.
+- The functional defaults match production for all three indices. The ExG2 preparation and inspection recover the original design with 47,807 plant-date observations, 479 plants, 101 dates, 16 genotypes, ten blocks, and a fixed design rank of 125.
+- The functional contrasts, bands, and adjusted means match the saved outputs within 1e-12. Smoothing, propagated covariance, and standard errors calculated from the 300 saved point fits agree within 1e-10.
+- The 4,999 bootstrap weight vectors per index match exactly. Replaying the first three draws per index reproduces the saved bootstrap-t statistics within 1e-10. Joint and per-curve critical values agree with the saved draw summaries.
+- A synthetic repeated-measures fit gives identical coefficients, variance components, CR2 calculations, and diagnostics in the original and current code. Elapsed time was excluded from the comparison.
 
-Detailed checks and verification scripts are retained beside this numbered local package. This was bounded verification, not a full 30,300-model or 4,999-draw rerun.
+The checks used saved results and selected refits or replays. The full 30,300-model and 4,999-draw runs were outside the scope of this review.
 
 ## Interpretation retained
 
-Cotton heritability is Vg/(Vg+Ve), conditional on block. No heritability confidence intervals or genotype-by-date variance components are added. Test labels identify field sections; the planned irrigation treatment was not implemented.
+Cotton heritability is `Vg / (Vg + Ve)`, conditional on block. The reported estimates concern separate within-date models. The analysis excludes heritability confidence intervals and genotype-by-date variance components. Test identifies sections of the field. The planned irrigation treatment was never applied.
 
-Functional bands are approximate, conditional on fitted covariance weights and smoothers. They account for dependence within plants, assume independence between plants after adjustment, and do not propagate variance-component or smoothing-parameter uncertainty. Multiplicity adjustment covers fifteen TM-1 contrasts over the quantile grid separately for each VI, not all VIs jointly. The additive model does not establish date-specific genotype differences in senescence.
+The functional bands are approximate and condition on the fitted covariance weights and smoothers, so they exclude uncertainty from estimating those quantities. The bootstrap accounts for dependence within a plant and assumes independence across plants after adjustment. The joint adjustment covers 15 contrasts against TM-1 over the quantile grid for each vegetation index separately. The additive model estimates genotype contrasts averaged across flights. Date-specific differences in senescence would require a model that allows genotype effects to vary by date.
 
-The RData inputs contain the previously prepared image quantiles; this cleanup does not certify raw-image extraction. Large inputs and saved reference models still need public hosting and release citations. No GitHub push was performed.
+The RData inputs contain prepared image quantiles. Validation starts there. See the [release guide](../data/DOWNLOADS.md) for the cotton inputs and saved models.

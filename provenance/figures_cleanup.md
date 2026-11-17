@@ -1,21 +1,19 @@
 # Correlation, figure, and table cleanup
 
-This numbered package preserves the final numerical expressions and plotting specifications while removing local-drive paths, old manuscript/image dependencies, retired scenario panels, and document-editing steps. It does not rerun CV, FPCA, mixed models, or bootstrap inference.
+The current renderers use the final numerical calculations and plot settings. Input paths are configurable, and the workflow uses the saved inputs and results for CV, FPCA, mixed models, and bootstrap inference.
 
 ## Verification
 
-- All 192 environment-date correlation matrices, pair counts, retained-quantile masks, screening diagnostics, ranges, and 120,000 plotted correlations reproduce the saved V5 calculation exactly. The V6 renderer retains the full q=1 row and column in every panel.
-- Feature importance rebuilt from the archived V15 outer coefficients matches the saved Figure 7/supporting data exactly. Its normalization and averaging are unchanged.
-- Figure 3 contrasts/bands, Figure 4 component/season summaries, supporting flight-time statistics, and Figure 6 panel values match their saved plotting inputs within absolute 1e-12.
-- Both S3 CSVs reproduce the final files byte-for-byte, including equal-environment averaging and per-environment percentage reductions.
-- All 30 rendered figures were compared with the final 600-dpi reference PNGs. The original Figure 4 PDF null device and prediction PNG null device are selected separately to preserve text/layout metrics. Pixel comparison, resolution/dimension checks, and visual contact-sheet inspection are recorded in the local verification directory.
+- The correlation script reproduces the saved V5 calculations exactly, including all 192 environment and date matrices, pair counts, retained quantiles, screening diagnostics, ranges, and 120,000 plotted correlations. The V6 renderer includes the full quantile 1 row and column in each panel.
+- Feature importance from the archived V15 outer coefficients matches Figure 7 and the supporting data exactly. The script uses the original normalization and averaging.
+- The values plotted for Figure 3 contrasts and bands, Figure 4 components and season summaries, supporting flight-time statistics, and Figure 6 match the saved inputs within an absolute tolerance of 1e-12.
+- Both Table S3 CSVs match the final files byte for byte. The calculations give each environment equal weight and compute percentage RMSE reductions before averaging across environments.
+- All 30 rendered PNGs matched the final 600 dpi reference PNGs pixel for pixel. The renderer uses the original PDF graphics device for the Figure 4 layout and the PNG device for the prediction layouts to preserve text and sizing. The review also checked resolution, dimensions, and a visual contact sheet.
 
-The renderer includes Figures 3, 4, 6–8 and S1–S25. Figure 5 remains in the previously verified HAM workflow. Figure 1/2 source presentations are preserved authored artifacts, not regenerated statistical results.
+The renderer covers Figures 3, 4, 6–8 and S1–S25. Figure 5 has a separate [heatmap workflow](../scripts/figures/HAM.md). The editable [Figures 1 and 2](../figures/source/README.md) are PowerPoint artwork. Figure 1 uses the author’s corrected 17 April flight start date. Validation of these files did not extend to reconstructing the photographs or raw quantile artwork.
 
 ## Metadata and limitations
 
-Table 1 model scope and Table S1 genotype metadata were transcribed from the identified accepted manuscript and supplement. Deleted revisions were excluded and vertically merged labels repeated. They are curated metadata, not new calculations; source hashes are recorded in `authored_artifacts.json`.
+Table 1 describes model scope and Table S1 records genotype information. Both were transcribed from the accepted manuscript and supplement. The transcription skips deleted revisions and repeats labels from vertically merged cells. Source checksums are in [artwork and table provenance](authored_artifacts.json).
 
-The available Figure 1 reference source still needs the author's date-label correction before release. Figure 2's corrected editable source is preserved. No claims are made about a fresh reconstruction of their original photography or raw quantile artwork.
-
-Scientific qualifications remain unchanged: descriptive quantile correlations, approximate conditional functional bands, saved-component maize heritability, and historical primary LOEO fits. Physical figure sizes, uncertainty meanings, colors, and final numbering are preserved. Large inputs still require public hosting/release citations. No GitHub push or manuscript changes were made.
+The quantile correlations are descriptive. The functional bands are approximate and conditional on fitted weights and smoothers. The maize heritability calculations use saved components, and the primary LOEO results use the historical fits. See the [release guide](../data/DOWNLOADS.md) for the inputs to each renderer.

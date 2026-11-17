@@ -1,6 +1,6 @@
 # Maize imagery collections
 
-Only the 11 maize environments analyzed in this paper are listed. Texas collections include trials 1-3; select TXH1.2020 and TXH2.2021 for this manuscript.
+These collections contain imagery for the 11 maize environments in the manuscript. The Texas collections cover trials 1–3 in each year. Use TXH1.2020 and TXH2.2021 for this study.
 
 | Manuscript environment | Deposited collection | Data to Science | DOI |
 | --- | --- | --- | --- |
@@ -16,4 +16,4 @@ Only the 11 maize environments analyzed in this paper are listed. Texas collecti
 | WIH3.2020 | WIH3.2020 | [Open collection](https://stac.d2s.org/collections/49d5771b-c179-4fa4-ac87-140d38a3b15d?.language=en) | [10.6084/m9.figshare.33301764](https://doi.org/10.6084/m9.figshare.33301764) |
 | WIH3.2021 | WIH3.2021 | [Open collection](https://stac.d2s.org/collections/a3794e12-0c8f-4889-b971-72e40a834d13?.language=en) | [10.6084/m9.figshare.33301776](https://doi.org/10.6084/m9.figshare.33301776) |
 
-Transcribed from the [G2F multimodal repository](https://github.com/ajdesalvio/g2f-multimodal/blob/42ae9d9dc61d898b4e729349ec3dc0f6ec2dfa10/README.md), accessed 12 November 2026. Collection-to-Texas-trial mapping follows that repository. These are source imagery collections, not downloads for this paper's processed BLUEs, fitted models, cotton data, or figure inputs. Those remain listed in [configured inputs](configured_inputs.csv) and still need release locations. Dataset licenses remain those of their source records.
+The collection links, DOIs, and Texas trial mapping come from the [G2F multimodal repository](https://github.com/ajdesalvio/g2f-multimodal/blob/42ae9d9dc61d898b4e729349ec3dc0f6ec2dfa10/README.md) (accessed 12 November 2026). Each collection follows the license in its source record. The [processed-data guide](DOWNLOADS.md) covers the separate release for BLUEs, fitted models, cotton data, and figure inputs. See [configured inputs](configured_inputs.csv) for filenames and checksums.

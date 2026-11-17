@@ -1,6 +1,6 @@
 # Remaining figures and tables
 
-Set paths in `config/figures.json`; relative paths start from the configuration file. Inputs are hash-pinned saved results. Install the R packages listed in `environment/R_versions.csv`. The original prediction figures use Arial; retain that font for matching exports.
+Install the R packages in `environment/R_versions.csv` and use Arial to match the prediction figures. The renderer checks the saved input files against the checksums in `config/figures.json`. If you move the inputs, update the paths relative to that file.
 
 From the package root:
 
@@ -9,22 +9,22 @@ Rscript scripts/figures/render_results.R config/figures.json output/figures
 python scripts/tables/prediction_table.py config/figures.json output/table_s3
 ```
 
-The renderer exports Figures 3, 4, 6, 7, 8 and S1–S25: 30 plots, each as 600-dpi PNG/JPEG plus PDF. Append `3`, `4`, `6`, `7`, or `8` to render one group. Group 4 includes S1–S14; group 7 includes S15–S25. Use a new output directory. Existing results are never overwritten.
+The renderer writes 30 plots as 600 dpi PNG and JPEG files and as PDFs. Append `3`, `4`, `6`, `7`, or `8` to render one figure group. Figure 4’s group includes S1–S14, and Figure 7’s includes S15–S25. Choose a new output directory.
 
-The current numbering replaces historical S16–S26 filenames with S15–S25 and the old prediction-table S6 filenames with S3. Plot data, colors, layouts, uncertainty bands, and physical dimensions are retained. Figure 6 remains 7.25 inches square.
+The former S16–S26 figures are now S15–S25, and the former prediction Table S6 is now S3. The plots retain their original data, colors, layouts, uncertainty bands, and dimensions. Figure 6 is 7.25 inches square.
 
 ## Optional numerical reconstruction
 
-These commands use saved inputs, not new model fits:
+Use these commands to recalculate correlations and feature summaries from saved inputs.
 
 ```sh
 Rscript scripts/maize/quantile_correlations.R config/nested_cv.json output/correlations
 Rscript scripts/maize/prepare_feature_figures.R V15_RUN_ROOT output/feature_data
 ```
 
-The correlation calculation uses genotype BLUEs and raw support within each environment/date. It retains the V15 screening rules, averages on the Fisher-z scale, and back-transforms. Combined correlations weight valid environment-date matrices equally, not environments equally. Correlations are descriptive and are not a cross-validation procedure.
+The correlation script screens genotype BLUEs with the corresponding raw support within each environment and date. It calculates descriptive correlations, averages them on the Fisher z scale, and transforms the averages back. In the combined matrix, each valid environment and date contributes equally.
 
-Feature summaries average model-relative absolute standardized coefficients over the 25 outer fits per scenario, with zero/excluded coefficients contributing zero. Update the figure configuration paths and hashes explicitly when using regenerated data.
+For feature summaries, the script scales absolute standardized coefficients by the largest one within each model, then averages across the 25 outer fits per scenario. Excluded predictors and zero coefficients contribute zero. If you plot regenerated data, check their values before updating the figure configuration paths and checksums.
 
 ## Other outputs
 
@@ -37,6 +37,6 @@ Feature summaries average model-relative absolute standardized coefficients over
 | Table S2 | [Maize heritability](../maize/HERITABILITY.md) |
 | Table S3A/B | `prediction_table.py`, above |
 
-S3 reports equal-weight environment means; percentage RMSE reductions are calculated per environment before averaging. The overall N cell is blank. These CSVs supply values, not Word formatting or tracked changes.
+Table S3 gives each environment equal weight. The script calculates the percentage RMSE reduction for each environment before averaging those reductions. It leaves the overall N cell blank. Use the CSVs as the source for the table values.
 
 See [verification and remaining limits](../../provenance/figures_cleanup.md).

@@ -1,23 +1,19 @@
 # V15 cleanup verification
 
-The public runner preserves the manuscript primary comparison: Median versus all quantiles, no adaptive selection, five repeated five-fold outer splits, five inner folds, and the original tuning grid. It runs each environment separately in the C locale. Both choices preserve the original production fold assignments; running the old engine once over all environments would change its environment-index seed offset.
+The runner compares Median and all 100 quantiles with adaptive selection disabled. It uses five repeats of five-fold outer CV, five inner folds, and the original tuning grid. It runs each environment separately in the C locale to reproduce the manuscript fold assignments. Running the original engine over all environments at once would change the seed offsets.
 
-Verification against preserved V15 code and production outputs:
+- The arguments and bodies of all 21 retained engine functions match the originals. The wrapper supplies explicit paths for the frozen inputs and uses the production settings.
+- The settings and every saved outer and inner fold assignment match across all 11 environments.
+- In TXH1.2020, we refit one complete outer split for each scenario using the full tuning grid. The original and current code agree exactly. The fits match the saved production results within 1e-12.
+- All six combined summary and prediction tables match exactly when recalculated from saved predictions.
+- Synthetic checks covered training-only preprocessing and tuning, constant-feature removal, intercept-only fallback, the command-line runner, checkpoint resume, source code checksums, and rejection of modified inputs.
 
-- All 21 retained engine function bodies and arguments are identical to the originals. The wrapper replaces machine-specific paths and generic defaults with explicit frozen inputs and production settings.
-- Settings and every saved outer/inner fold assignment match for all 11 environments.
-- One complete outer split for each primary scenario in TXH1.2020 was refitted using the full tuning grid. Original and cleaned outputs matched exactly; saved production fits matched within 1e-12.
-- All six combined summary/prediction tables recalculated from saved predictions matched exactly.
-- Synthetic checks passed for training-only preprocessing/tuning, constant-feature exclusion, intercept fallback, the public CLI, unchanged resumed checkpoints, source fingerprints, and rejection of modified inputs.
+The aggregator uses the original validation and summary calculations. It loads the engine from the first entry in the source path list. The run records now include checksums for both the engine and the runner. Use a separate output directory for new runs because the original checkpoints record different source files.
 
-The aggregator retains the original validation and summary calculations. Its source loader reads the engine from the first entry of the source-path vector; checkpoint provenance now fingerprints both engine and runner. Original production checkpoints therefore require a separate output directory from cleaned runs.
+The checks cover the function definitions, fold assignments, summaries, and representative fits. A full production rerun was outside the scope of the review. See the [tested R versions](../environment/R_versions.csv), [source mappings](source_map.csv), and [release guide](../data/DOWNLOADS.md).
 
-No full manuscript CV rerun was performed. These checks establish unchanged definitions, folds, summaries, and representative fits, rather than claiming a fresh complete rerun. Original scripts, manuscript inputs, and production outputs were preserved. Tested package versions are in `environment/R_versions.csv`; source mappings are in `source_map.csv`.
-
-For a small synthetic check from the package root:
+Run this small synthetic check from the repository root.
 
 ```sh
 Rscript validation/check_nested_cv.R output/nested_synthetic_check
 ```
-
-Frozen input files are not bundled. Their public hosting and release citation remain necessary before this package is ready for turnkey public reproduction.

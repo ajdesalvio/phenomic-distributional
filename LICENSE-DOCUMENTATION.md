@@ -6,4 +6,4 @@ Except where otherwise credited, original repository documentation and figure ar
 
 [License summary](https://creativecommons.org/licenses/by/4.0/) | [Full legal terms](https://creativecommons.org/licenses/by/4.0/legalcode)
 
-Credit the creators and this repository, retain supplied notices, link the license, and indicate changes. This notice does not relicense third-party images, numerical datasets, or the published journal article. See [scope and exceptions](LICENSING.md).
+When reusing the material, credit the creators and this repository, keep the original notices, link to the license, and say what you changed. Third-party images, numerical datasets, and the published article follow their own terms. See the [licensing guide](LICENSING.md).

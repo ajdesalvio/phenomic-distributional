@@ -1,5 +1,5 @@
 # Authored figures
 
-Figure1.pptx and Figure1.jpg are the corrected author files received 12 November 2026. Flight start is 17 April 2024 in both. Files are copied unchanged. The supplied JPEG records 772 dpi; it has not been resampled. The older V7 reference remains in legacy/package_v7/.
+The author’s corrected `Figure1.pptx` and `Figure1.jpg` (12 November 2026) both give 17 April 2024 as the flight start date. The JPEG retains its original 772 dpi. The earlier V7 reference is in `legacy/package_v7/`.
 
-Figure2.pptx is the previously verified editable source. These presentations are authored artwork, separate from statistical figure renderers. Original artwork is covered by [CC BY 4.0](../../LICENSE-DOCUMENTATION.md), with third-party material retaining its own terms.
+Use `Figure2.pptx` to edit Figure 2. Figures 1 and 2 were prepared in PowerPoint. The statistical figures have their own [rendering commands](../../scripts/figures/README.md). [CC BY 4.0](../../LICENSE-DOCUMENTATION.md) covers the original artwork. Third-party material follows its own terms.

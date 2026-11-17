@@ -1,13 +1,11 @@
 # ExGR optimizer sensitivity
 
-**Decision, 11 November 2026:** retain the existing manuscript inputs and results. Keep fresh model regeneration separate from the frozen reference. No manuscript reanalysis was performed for this audit.
+On 11 November 2026, we kept the archived inputs as the reference for the manuscript. The refits below were used to investigate differences in BLUEs.
 
-All 35,900 ExGR models were refitted. All 21,326,300 genotype/model keys matched, but 2,700 models exceeded an absolute BLUE difference of 10^-7. Seventeen exceeded 10^-4; the maximum was 0.001395. There were 815 convergence/gradient/Hessian messages despite zero optimizer exit codes.
+We refit all 35,900 ExGR models and matched all 21,326,300 genotype and model keys. For 2,700 models, at least one BLUE differed by more than 10^-7. Seventeen exceeded 10^-4, and the largest absolute difference was 0.001395. The fits produced 815 messages about convergence, gradients, or Hessians despite zero optimizer exit codes.
 
-For those 17 cases plus one control, using archived variance ratios on current raw data reproduced archived BLUEs within 4.50 × 10^-14. Using rebuilt ratios reproduced rebuilt BLUEs within 6.55 × 10^-14. These checks identify covariance estimation, rather than changed data or formula, as the source of the largest discrepancies tested.
+For those 17 models and one control, the archived variance ratios reproduced the archived BLUEs on the current raw data within 4.50 × 10^-14. The rebuilt ratios reproduced the rebuilt BLUEs within 6.55 × 10^-14. This points to covariance estimation as the source of the largest discrepancies tested.
 
-Two tighter optimizers were run on the six largest cases and the control. Neither the archived nor rebuilt solution was uniformly preferable. The tightened estimates agreed within 1.28 × 10^-7. Across the selected cases, archived/rebuilt genotype BLUE Pearson correlations were at least 0.9997305; this does not establish identical downstream predictions after retraining.
+We used two tighter optimizers on the six largest cases and the control. The tightened estimates agreed within 1.28 × 10^-7. The checks gave no consistent reason to prefer the archived or rebuilt solution. The Pearson correlation between archived and rebuilt genotype BLUEs was at least 0.9997305 in the selected cases. Downstream predictions after retraining were outside the scope of this comparison.
 
-Nine of the 17 largest discrepancies were outside the final 11 prediction environments. Eight were inside and were used in some saved models. Accordingly, the audit does not claim zero downstream impact or exact first-stage refit equivalence. Original inputs remain the reference for reported results; the comparison failure remains documented.
-
-Small numerical evidence tables are in `results/reference/`. Script lineage and hashes are in `source_map.csv`. Original pixel extraction, public data hosting, and other repository workflows remain separate audit tasks.
+Nine of the 17 largest discrepancies were outside the final 11 prediction environments. The remaining eight occurred inside those environments and were used in some saved models. The archived inputs remain the reference for the reported results. See the [reference tables](../results/reference/) and [script lineage](source_map.csv) for the numerical evidence and checksums. The audit starts from the existing image-level quantiles.

@@ -1,6 +1,6 @@
 # Cotton models
 
-Set the paths in `config/cotton.json`. Paths are relative to that file; keep the hashes to use the manuscript inputs. Required packages and tested versions are listed in `environment/R_versions.csv`. The functional calculation requires `clubSandwich` 0.7.0.
+The [data release](../../data/DOWNLOADS.md) places the inputs at the paths in `config/cotton.json`. If you store them elsewhere, change the paths relative to that file and keep the manuscript checksums. See `environment/R_versions.csv` for the tested package versions. The functional workflow requires `clubSandwich` 0.7.0.
 
 ## Export the manuscript results
 
@@ -10,7 +10,7 @@ From the package root:
 Rscript scripts/cotton/export_reference.R config/cotton.json output/cotton_reference
 ```
 
-This checks the saved input hashes and regenerates the heritability summary tables and functional contrast/band tables without refitting. It requires the saved heritability metrics and three functional model files listed in the configuration.
+The exporter checks the saved heritability metrics and three functional model files against their recorded checksums. It uses those files to rebuild the heritability summaries, functional contrasts, and confidence bands.
 
 ## Fit heritability models
 
@@ -19,9 +19,9 @@ Rscript scripts/cotton/run_heritability.R config/cotton.json output/h2_smoke smo
 Rscript scripts/cotton/run_heritability.R config/cotton.json output/h2_full full
 ```
 
-The smoke check fits nine models. The full run fits PSRI, CVI, and ExG2 across 101 dates and 100 quantiles: 30,300 models, sequentially. Each fits `response ~ 1 + (1 | Pedigree) + (1 | Block)` by REML. Block is Test × Tier. Heritability is `Vg / (Vg + Ve)`, conditional on block; no replication divisor is used. Singular fits are recorded, while unresolved convergence warnings stop the run.
+The smoke check fits nine models. The full run fits 30,300 models in sequence across PSRI, CVI, and ExG2, 101 dates, and 100 quantiles. Each uses REML with `response ~ 1 + (1 | Pedigree) + (1 | Block)`, where Block is Test × Tier. Heritability is `Vg / (Vg + Ve)`, conditional on block. The script records singular fits and stops on unresolved convergence warnings.
 
-Use a new output directory. Full outputs retain the original `_V6` filenames, including complete curves for figure preparation. Smoke results are explicitly incomplete. Heritability summaries aggregate separate within-date fits; their medians across quantiles are not heritability estimates for the median VI trait.
+Use a new output directory. Use the full run’s `_V6` outputs, including the complete curves, to prepare figures. When a summary reports the median across quantiles, it takes the median of the heritability estimates from those separate within-date fits. Heritability of the median vegetation index trait comes from the fit at quantile 0.50.
 
 ## Fit functional comparisons
 
@@ -30,10 +30,10 @@ Rscript scripts/cotton/run_functional.R config/cotton.json ExG2 output/fmm_ExG2 
 Rscript scripts/cotton/run_functional.R config/cotton.json ExG2 output/fmm_ExG2 full
 ```
 
-Repeat for PSRI and CVI, each with its own output directory. `inspect` checks inputs and design without fitting or creating the output directory. Optional `smoke` runs the original reduced five-date/ten-quantile check with 199 draws; use a separate directory.
+Repeat for PSRI and CVI, giving each index its own output directory. `inspect` checks the inputs and design before fitting. For a smaller test, run `smoke` in a separate directory. It uses five dates, ten quantiles, and 199 draws.
 
-The full model is `response ~ Pedigree + Flight + Block + (1 | Plant)`. It retains 4,999 plant wild bootstrap-t draws and exports pointwise, per-curve, and joint 15-contrast bands for each VI. Covariance weights and smoothers stay fixed during bootstrap draws.
+The full model is `response ~ Pedigree + Flight + Block + (1 | Plant)`. It uses 4,999 plant wild bootstrap-t draws and exports pointwise bands, bands for each curve, and bands adjusted jointly over 15 contrasts for each vegetation index. Covariance weights and smoothers stay fixed during bootstrap draws.
 
-Append `resume` to the same full-run command to resume matching checkpoints. Use `validate` instead of `full` to check a completed cleaned run. Historical checkpoints cannot be adopted because source fingerprints differ. Keep the code, inputs, paths, configuration, and package versions unchanged while resuming.
+Append `resume` to the full-run command to continue from compatible checkpoints created with the current code. Keep the code, inputs, paths, configuration, and package versions the same. Use `validate` in place of `full` to check a completed run.
 
-These are additive genotype contrasts adjusted for flight and block, not genotype-by-date effects. See [verification and scope](../../provenance/cotton_cleanup.md) for the checks and inference qualifications.
+The additive model estimates genotype contrasts across flights, with adjustment for flight and block. See the [validation and interpretation notes](../../provenance/cotton_cleanup.md).

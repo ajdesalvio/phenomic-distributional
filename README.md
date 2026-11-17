@@ -1,25 +1,25 @@
 # Manuscript analysis code
 
-Reproduce the revised manuscript from its frozen inputs, or run the separately documented model fits. Fresh ExGR fitting can produce different BLUEs as noted in [optimizer sensitivity](provenance/optimizer_sensitivity.md).
+Use the original analysis inputs to reproduce the results in the revised maize and cotton manuscript. The workflow guides also explain how to fit new models. Refitting ExGR models can change the BLUEs. See the [optimizer sensitivity audit](provenance/optimizer_sensitivity.md).
 
-1. Follow [software setup](environment/README.md).
-2. Choose a workflow below and obtain its inputs. [Configured inputs](data/configured_inputs.csv) lists paths and hashes across all configurations; [G2F imagery DOIs](data/G2F_COLLECTIONS.md) are supplied; [processed-data download and extraction instructions](data/DOWNLOADS.md) describe the prepared release (journal DOI pending). Edit paths in the relevant `config/*.json`. Relative paths start from that configuration file.
-3. Run commands from this package's root. Quote paths containing spaces. Use new output locations unless a guide explicitly describes checkpoint resume.
+1. Install the software listed in the [setup guide](environment/README.md).
+2. Choose a workflow below and check which files it needs. The [processed-data guide](data/DOWNLOADS.md) explains how to extract the release once the journal DOI is available. The [input list](data/configured_inputs.csv) gives the expected paths and checksums. See the [G2F collections](data/G2F_COLLECTIONS.md) for source imagery.
+3. Run commands from the repository root. Quote paths that contain spaces. Choose a new output location for each run unless you are resuming it as described in the guide. If you keep inputs elsewhere, edit the relevant file in `config/`. Relative input paths are resolved from that file’s directory.
 
 | Task | Guide |
 |---|---|
 | Field join, frozen BLUE recovery, raw support, yield BLUEs | [Preparation](scripts/preprocess/README.md) |
 | Optional fresh ExGR fits | [Refitting](scripts/preprocess/REFIT.md) |
 | Within-environment nested CV and aggregation | [Nested CV](scripts/maize/README.md) |
-| Saved across-environment predictions; optional FPCA/LOEO refits | [Across-environment prediction](scripts/maize/LOEO.md) |
-| Cotton saved result export and optional model fits | [Cotton](scripts/cotton/README.md) |
-| Maize saved component heritability and Table S2 | [Heritability](scripts/maize/HERITABILITY.md) |
+| Across-environment predictions and optional FPCA or LOEO refits | [Across-environment prediction](scripts/maize/LOEO.md) |
+| Export cotton results or fit new models | [Cotton](scripts/cotton/README.md) |
+| Maize heritability from saved components and Table S2 | [Heritability](scripts/maize/HERITABILITY.md) |
 | Figure 5 maps | [HAM](scripts/figures/HAM.md) |
 | Remaining figures, correlations, and tables | [Figures and tables](scripts/figures/README.md) |
 
-`scripts/` contains runnable commands; `src/` contains their shared functions. `config/` defines inputs and settings, `metadata/` holds curated tables, and `results/reference/` contains selected small reference results. `provenance/` records verification and limitations. Generated files belong in `output/`.
+Run the entry points in `scripts/`. Their shared functions live in `src/`, and `config/` holds the input paths and settings. Find curated tables in `metadata/`, selected results in `results/reference/`, and validation records in `provenance/`. The examples write to `output/`.
 
-Saved result exports and renderers do not refit models. Nested CV, yield generation, and the explicitly marked fitting commands do. The preparation-only validator is optional when using other workflows:
+Export and rendering commands use saved results. Nested CV, yield generation, and commands marked as fitting steps run models. To check the preparation inputs, run the optional validator below.
 
 ```sh
 Rscript scripts/preprocess/validate_inputs.R config/published_inputs.json output/input_check.json
@@ -29,6 +29,6 @@ Editable Figures 1–2 are in [figures/source](figures/source/README.md).
 
 Historical scripts and figures are preserved separately in [legacy](legacy/README.md).
 
-Original code is licensed under [MIT](LICENSE); original documentation and figures under [CC BY 4.0](LICENSE-DOCUMENTATION.md). See [license scope](LICENSING.md) for data and third-party exceptions.
+The [MIT license](LICENSE) covers original code. [CC BY 4.0](LICENSE-DOCUMENTATION.md) covers original documentation and figures. See the [licensing guide](LICENSING.md) for data and third-party terms.
 
 For the original custom Python functions, see the [Python setup and usage instructions](legacy/pre_revision/README.md#installation), including shapefile creation, image cropping, soil masking, and vegetation index extraction.

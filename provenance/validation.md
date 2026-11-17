@@ -1,14 +1,14 @@
 # Validation
 
-The review copies preserve the statistical calculations. Formatting was checked for identical parsed R expressions.
+The current preparation scripts preserve the original statistical calculations. We checked that formatting edits produced identical parsed R expressions.
 
-- Fifteen fixture checks passed, including duplicate/missing-key and overwrite guards.
-- Field-join and raw-support calculation bodies match the verified originals.
-- Full raw-support regeneration produced 11,684,000 cells byte-identical to the manuscript support table (MD5 `a0c8cad4ecfffcc3fb184407f57efe20`).
-- Cleaned/original yield code produced byte-identical synthetic estimates; the source version previously reproduced all 19 historical environments.
-- ExGR checkpoint resume, merge, and comparison passed on saved raw-fit chunks (four models, 1,350 rows).
-- The current frozen-input configuration passed hash and support-lineage validation.
+- Fifteen tests with small inputs checked duplicate and missing keys, overwrite protection, and other input safeguards.
+- The functions for field joins and raw support match the verified originals.
+- Rebuilding raw support produced 11,684,000 cells and matched the manuscript table byte for byte (MD5 `a0c8cad4ecfffcc3fb184407f57efe20`).
+- The original and current yield scripts produced identical output on synthetic data. The original script also reproduced the reference yield estimates for all 19 historical environments.
+- We checked ExGR checkpoint resume, merge, and comparison using saved fit chunks covering four models and 1,350 rows.
+- The manuscript inputs passed checksum and raw support provenance checks.
 
-No manuscript models were reanalysed during cleanup. The separate full ExGR refit and its numerical qualification are described in [the audit](optimizer_sensitivity.md). Public download locations remain to be supplied.
+The preparation review used saved results and small tests. See the [optimizer sensitivity audit](optimizer_sensitivity.md) for the separate full ExGR refit and the [release guide](../data/DOWNLOADS.md) for its inputs.
 
-Run the portable fixture checks with `Rscript validation/check_preprocessing.R output/checks` from the package root.
+From the repository root, run `Rscript validation/check_preprocessing.R output/checks` for the small tests.

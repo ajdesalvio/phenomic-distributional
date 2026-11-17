@@ -1,6 +1,6 @@
 # Processed-data downloads
 
-**Journal repository DOI/download link: pending.** The release archives are prepared but are not yet publicly available. This page will link the deposit when its DOI is assigned. Original maize imagery is listed separately in [G2F collections](G2F_COLLECTIONS.md).
+**Journal repository DOI pending.** The archives are ready for deposit. Download links will appear here once the DOI is available. For the original maize imagery, see the [G2F collections](G2F_COLLECTIONS.md).
 
 ## Choose archives
 
@@ -13,31 +13,31 @@
 | `05_optional_reconstruction.zip` | Phenotype inputs, BLUE workspace, and original projection parts | 2.87 GB |
 | `06_nested_cv_saved_evidence.zip` | Saved V15 predictions, coefficients, folds, and tuning evidence | 337 MB |
 
-All six total **8.86 GB downloaded / 31.78 GB extracted**. For figure rendering and S3, start with 01; cotton Table 2 uses 03. Nested CV and correlation calculations use 02. Preparation validation needs 02 and 04. Archives 05 and 06 support optional reconstruction and inspection.
+Downloading all six archives takes **8.86 GB**, and the extracted files take **31.78 GB**. For figures and Table S3, use archive 01. For cotton Table 2, use 03. Archive 02 supplies nested CV and the correlation calculations, and the preparation validator uses both 02 and 04. Use 05 and 06 for optional reconstruction or inspection.
 
 ## Download and extract
 
 1. Download the chosen ZIPs plus `FILE_MANIFEST.csv`, `ARCHIVE_CHECKSUMS.txt`, and `verify_release.py` from the deposit into one download folder. The deposit also includes `README_RELEASE.txt` and `ARCHIVE_SUMMARY.csv`.
-2. Verify a download (Python standard library only):
+2. Check the ZIP’s checksum with Python’s standard library.
 
    ```sh
    python "/path/to/downloads/verify_release.py" --archives --group 01_figures_tables_heritability.zip
    ```
 
-3. Open a terminal in the **code repository root**, beside `README.md`, `config/`, and `scripts/`. Extract each selected archive there:
+3. Open a terminal in the **repository root**, beside `README.md`, `config/`, and `scripts/`. Extract each ZIP there.
 
    ```sh
    python -m zipfile -e "/path/to/downloads/01_figures_tables_heritability.zip" .
    ```
 
-   Repeat with each chosen ZIP filename. Each archive already contains `data/`; extracting into `data/` would incorrectly create `data/data/`. Use a fresh checkout or preserve any locally modified input files before extraction. No configuration path changes are needed with this layout.
+   Substitute the filename of each archive you downloaded. Each ZIP already contains `data/`, so extracting at the root puts inputs where the configurations expect them. Use a fresh checkout or back up any locally modified inputs first.
 
-4. Verify the extracted group:
+4. Verify the extracted files.
 
    ```sh
    python "/path/to/downloads/verify_release.py" --installed . --group 01_figures_tables_heritability.zip
    ```
 
-Omit `--group` only when all six archives have been downloaded or extracted, respectively. The manifest lists every file's destination and checksum. These ZIP64 archives are supported by Python's ZIP reader.
+For `--archives`, omit `--group` to check all six downloads. For `--installed`, omit it once all six archives have been extracted. The manifest lists each file’s destination and checksum. Python’s ZIP reader supports these ZIP64 archives.
 
-Follow the [workflow guides](../README.md) after extraction. Saved V15 evidence in 06 is not a resumable checkpoint set for the cleaned code; it supports inspection and feature-summary reconstruction. The release was verified against code commit `9a1d239bc5d530a123a81f368ed86151a326ccbe`. Data license and final citation details will be supplied with the deposit.
+After extraction, choose a [workflow](../README.md). Archive 06 contains the original V15 outputs for inspection and for rebuilding feature summaries. To resume a fit, use checkpoints from a run of the current code. We verified the release against commit `9a1d239bc5d530a123a81f368ed86151a326ccbe`. The deposit will provide the data license and citation.
