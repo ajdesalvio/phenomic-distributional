@@ -14,7 +14,7 @@ The command checks the saved model archive, exports predictions and coefficients
 
 ## Optional refitting
 
-Use the original projection table and yield file.
+Use the projection table and yield file from the release.
 
 ```sh
 python scripts/maize/partition_projections.py data/2020_2021_G2F_FPC_Scores_VI_BLUEs_Projections_AllQuantiles_ExGR.csv output/projections
@@ -23,11 +23,11 @@ Rscript scripts/maize/run_loeo.R config/loeo.json output/projections output/loeo
 
 The runner fits Median and all quantiles with within-environment scaling, one model at a time. Append an environment such as `TXH1.2020` to run that environment alone. Repeat the command to resume from matching checkpoints. A complete run has 22 models. Partial summaries show how many held-out environments have finished. Save refits separately from the manuscript results.
 
-The workflow retains 95% of the variance for each quantile, uses seed 123, groups inner folds by environment, and runs caret’s original `tuneLength=25` search. Inner tuning reuses the FPCA from the outer training set. Scaling uses predictors from the unlabeled held-out cohort. The output records caret’s historical interpolation or clamping of lambda values.
+The workflow retains 95% of the variance for each quantile, uses seed 123, groups inner folds by environment, and runs caret with `tuneLength=25`. Inner tuning reuses the FPCA from the outer training set. Scaling uses predictors from the unlabeled held-out cohort. The output records caret’s interpolation or clamping of lambda values.
 
 ## Optional FPCA preparation
 
-List all five archived projection parts in their original order to assemble them.
+List the five supplied projection parts in order from PART1 to PART5.
 
 ```sh
 Rscript scripts/maize/assemble_projections.R output/projections.csv PART1.csv PART2.csv PART3.csv PART4.csv PART5.csv
@@ -41,4 +41,4 @@ Rscript scripts/maize/project_fpca.R config/loeo.json output/fresh_projections.c
 
 The default includes all 100 quantiles. Append `TXH1.2020 0.5` to run a single environment and quantile. FPCA uses curves from the outer training set. Held-out curves need at least two observations within the training time range. The script saves diagnostic plots and R package versions alongside the CSV.
 
-Fresh FPCA follows the historical algorithm. For a new analysis with the resulting projection table, record its checksum in the configuration. Keep the published projection table and checksum for manuscript reproduction. See the [validation notes](../../provenance/loeo_cleanup.md).
+For a new analysis, record the checksum of the new projection table in the configuration. For manuscript reproduction, use the projections supplied in the release. See the [validation notes](../../provenance/loeo_cleanup.md).

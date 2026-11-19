@@ -11,7 +11,7 @@ python scripts/tables/prediction_table.py config/figures.json output/table_s3
 
 The renderer writes 30 plots as 600 dpi PNG and JPEG files and as PDFs. Append `3`, `4`, `6`, `7`, or `8` to render one figure group. Figure 4’s group includes S1–S14, and Figure 7’s includes S15–S25. Choose a new output directory.
 
-The former S16–S26 figures are now S15–S25, and the former prediction Table S6 is now S3. The plots retain their original data, colors, layouts, uncertainty bands, and dimensions. Figure 6 is 7.25 inches square.
+Figure 6 is 7.25 inches square.
 
 ## Optional numerical reconstruction
 

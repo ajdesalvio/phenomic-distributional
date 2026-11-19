@@ -21,7 +21,7 @@ Rscript scripts/cotton/run_heritability.R config/cotton.json output/h2_full full
 
 The smoke check fits nine models. The full run fits 30,300 models in sequence across PSRI, CVI, and ExG2, 101 dates, and 100 quantiles. Each uses REML with `response ~ 1 + (1 | Pedigree) + (1 | Block)`, where Block is Test × Tier. Heritability is `Vg / (Vg + Ve)`, conditional on block. The script records singular fits and stops on unresolved convergence warnings.
 
-Use a new output directory. Use the full run’s `_V6` outputs, including the complete curves, to prepare figures. When a summary reports the median across quantiles, it takes the median of the heritability estimates from those separate within-date fits. Heritability of the median vegetation index trait comes from the fit at quantile 0.50.
+Use a new output directory. Use the full run’s outputs, including the complete curves, to prepare figures. When a summary reports the median across quantiles, it takes the median of the heritability estimates from those separate within-date fits. Heritability of the median vegetation index trait comes from the fit at quantile 0.50.
 
 ## Fit functional comparisons
 

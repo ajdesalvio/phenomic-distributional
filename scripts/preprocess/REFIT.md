@@ -7,7 +7,7 @@ Rscript scripts/preprocess/plan_exgr.R --input=RAW.csv --output=output/plan --ba
 Rscript scripts/preprocess/fit_exgr_batch.R --plan=output/plan/ExGR_Plan.rds --batch=1 --output=output/chunks
 ```
 
-Run the worker for **each batch listed in `output/plan/Batches.csv`**. The supplied exclusion list omits DAP 13 in MOH1.2020 because that date is absent from the historical BLUE archive. Each worker saves a checkpoint every 25 model keys and checks it when resuming.
+Run the worker for **each batch listed in `output/plan/Batches.csv`**. The supplied exclusion list omits DAP 13 in MOH1.2020 to match the manuscript BLUEs. Each worker saves a checkpoint every 25 model keys and checks it when resuming.
 
 ```sh
 Rscript scripts/preprocess/export_exgr.R --plan=output/plan/ExGR_Plan.rds --chunks=output/chunks --output=output/rebuilt

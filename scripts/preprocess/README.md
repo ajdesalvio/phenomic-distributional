@@ -8,7 +8,7 @@ Compare the existing export with the corrected field map.
 ```sh
 Rscript scripts/preprocess/join_field_info.R --input RAW.csv --field-map MAP.csv --output output/field_check --mode verify --allow-unmatched true
 ```
-Use `--mode join` to write the joined analysis table. `--allow-unmatched true` lets the check proceed with missing assignments and records the affected images. The historical export had 309 unmatched images. The default is to stop if any image lacks a match.
+Use `--mode join` to write the joined analysis table. `--allow-unmatched true` lets the check proceed with missing assignments and records the affected images. The supplied export has 309 unmatched images. The default is to stop if any image lacks a match.
 
 ## Recover archived BLUEs
 
@@ -26,7 +26,7 @@ Rscript scripts/preprocess/build_raw_support.R --raw RAW.csv --predictors BLUE_R
 
 ## Fit yield BLUEs
 
-Fit the historical model in all 19 environments and compare the results with the manuscript yield input.
+Fit the yield model in all 19 environments and compare the results with the manuscript yield input.
 ```sh
 Rscript scripts/preprocess/fit_yield_blue.R --phenotype-2020=PHENO_2020.csv --phenotype-2021=PHENO_2021.csv --output=output/yield --reference=YIELD_REFERENCE.csv
 ```

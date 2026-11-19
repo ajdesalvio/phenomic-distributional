@@ -9,7 +9,7 @@ python scripts/figures/build_ham.py config/ham.json output/ham
 Rscript scripts/figures/render_ham.R output/ham
 ```
 
-The R renderer uses `png`, `jsonlite`, `digest`, and R’s built-in `grid`. The workflow writes eleven RGB and heatmap pairs, numeric arrays, and tables with curves and summaries. It exports the original Figure 5 layout as 600 dpi PNG and JPEG files and as a PDF.
+The R renderer uses `png`, `jsonlite`, `digest`, and R’s built-in `grid`. The workflow writes eleven RGB and heatmap pairs, numeric arrays, and tables with curves and summaries. It exports Figure 5 as 600 dpi PNG and JPEG files and as a PDF.
 
 For each image, the script calculates right-continuous empirical ranks from that image’s valid pixels. It assigns colors by interpolating the heritability curve for the corresponding date and vegetation index at those ranks. The workflow preserves the masks, endpoint handling, band order, rotations, and common jet color scale.
 

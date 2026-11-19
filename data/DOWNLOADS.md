@@ -11,7 +11,7 @@
 | `03_cotton_models.zip` | Cotton inputs, field map, and saved heritability/functional results | 573 MB |
 | `04_raw_support_lineage.zip` | Raw ExGR quantiles, maize field map, and support provenance | 440 MB |
 | `05_optional_reconstruction.zip` | Phenotype inputs, BLUE workspace, and original projection parts | 2.87 GB |
-| `06_nested_cv_saved_evidence.zip` | Saved V15 predictions, coefficients, folds, and tuning evidence | 337 MB |
+| `06_nested_cv_saved_evidence.zip` | Saved nested CV predictions, coefficients, fold assignments, and tuning results | 337 MB |
 
 Downloading all six archives takes **8.86 GB**, and the extracted files take **31.78 GB**. For figures and Table S3, use archive 01. For cotton Table 2, use 03. Archive 02 supplies nested CV and the correlation calculations, and the preparation validator uses both 02 and 04. Use 05 and 06 for optional reconstruction or inspection.
 
@@ -40,4 +40,4 @@ Downloading all six archives takes **8.86 GB**, and the extracted files take **3
 
 For `--archives`, omit `--group` to check all six downloads. For `--installed`, omit it once all six archives have been extracted. The manifest lists each file’s destination and checksum. Python’s ZIP reader supports these ZIP64 archives.
 
-After extraction, choose a [workflow](../README.md). Archive 06 contains the original V15 outputs for inspection and for rebuilding feature summaries. To resume a fit, use checkpoints from a run of the current code. We verified the release against commit `9a1d239bc5d530a123a81f368ed86151a326ccbe`. The deposit will provide the data license and citation.
+After extraction, choose a [workflow](../README.md). Archive 06 contains the saved nested CV outputs for inspection and for rebuilding feature summaries. To resume a fit, use checkpoints from your own run. We verified the release against commit `9a1d239bc5d530a123a81f368ed86151a326ccbe`. The deposit will provide the data license and citation.

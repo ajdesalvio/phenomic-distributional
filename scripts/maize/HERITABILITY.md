@@ -14,4 +14,4 @@ Outputs include Table S2, quantile/VI/date summaries, Figure 4 component data, c
 
 The summaries use 31 distinct representations from the 33 original labels. They keep ExG2 for the ExG2/GCC pair and NGRDI for the NGRDI/NDI pair. Original labels remain in the saved-fit export. Formula and equivalence metadata are in `metadata/`.
 
-Combined summaries pool fit-level estimates across environments. The genotype percentage in the stacked variance plots uses total variance, including nuisance components, as its denominator. Heritability uses only `Vg + Ve`. The audit verifies the calculations from saved components. Historical convergence and model adequacy are outside the scope of that check. See [verification](../../provenance/maize_ham_cleanup.md).
+Combined summaries pool fit-level estimates across environments. The genotype percentage in the stacked variance plots uses total variance, including nuisance components, as its denominator. Heritability uses only `Vg + Ve`. The audit verifies the calculations from saved components. Assessing convergence and model adequacy requires the underlying fits. See [verification](../../provenance/maize_ham_cleanup.md).

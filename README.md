@@ -1,6 +1,6 @@
 # Manuscript analysis code
 
-Use the original analysis inputs to reproduce the results in the revised maize and cotton manuscript. The workflow guides also explain how to fit new models. Refitting ExGR models can change the BLUEs. See the [optimizer sensitivity audit](provenance/optimizer_sensitivity.md).
+Use the saved analysis inputs to reproduce the results in the maize and cotton manuscript. The workflow guides also explain how to fit new models. Refitting ExGR models can change the BLUEs. See the [optimizer sensitivity audit](provenance/optimizer_sensitivity.md).
 
 1. Install the software listed in the [setup guide](environment/README.md).
 2. Choose a workflow below and check which files it needs. The [processed-data guide](data/DOWNLOADS.md) explains how to extract the release once the journal DOI is available. The [input list](data/configured_inputs.csv) gives the expected paths and checksums. See the [G2F collections](data/G2F_COLLECTIONS.md) for source imagery.

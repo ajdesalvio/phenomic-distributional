@@ -9,7 +9,7 @@ Rscript -e "x <- read.csv('environment/R_versions.csv'); install.packages(setdif
 Rscript environment/check.R
 ```
 
-The table records the versions we tested for direct dependencies. Use those versions when reproducing the numerical results. The check fails if a required package is missing, and the cotton functional workflow specifically requires `clubSandwich` 0.7.0. If you install packages in a custom library, set `R_LIBS_USER` before opening R. We used a separate local library for `clubSandwich` when validating the manuscript results.
+The table records the versions we tested for direct dependencies. Use those versions when reproducing the numerical results. The check fails if a required package is missing, and the cotton functional workflow specifically requires `clubSandwich` 0.7.0. If you install packages in a custom library, set `R_LIBS_USER` before opening R.
 
 `RhpcBLASctl` is optional for limiting BLAS threads in cotton fits.
 
