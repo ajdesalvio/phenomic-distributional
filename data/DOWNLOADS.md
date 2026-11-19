@@ -1,6 +1,7 @@
 # Processed-data downloads
 
 **Journal repository DOI pending.** The archives are ready for deposit. Download links will appear here once the DOI is available. For the original maize imagery, see the [G2F collections](G2F_COLLECTIONS.md).
+In the meantime, all zipped archives needed to use this repository can be downloaded from this [Google Drive link](https://drive.google.com/drive/folders/1YO74_ZNUwCX5Fv9wVQU3VXdMEk_Ivn-j?usp=sharing).
 
 ## Choose archives
 
